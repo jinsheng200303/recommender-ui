@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div>hello world11111111111!</div>
-    <span>{{ homeData }}</span>
+    <el-main>Main</el-main>
   </div>
 </template>
 

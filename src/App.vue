@@ -3,7 +3,11 @@
   <el-container class="layout">
     <el-container class="el-main-box">
       <el-main class="main">
-        <router-view></router-view>
+        <el-container direction="vertical">
+          <el-header><navbar/></el-header>
+          <router-view></router-view>
+          <el-footer>Footer</el-footer>
+        </el-container>
       </el-main>
     </el-container>
   </el-container>
@@ -11,7 +15,7 @@
 </template>
 
 <script setup>
-
+  import navbar from './views/navbar.vue';
 </script>
 
 <style scoped>
@@ -37,4 +41,10 @@
   text-align: right;
 }
 
+.el-header, .el-footer {
+    background-color: #B3C0D1;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+  }
 </style>
