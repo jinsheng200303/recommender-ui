@@ -1,10 +1,10 @@
 <template>
     <div>
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-            <el-menu-item index="1"><router-link to="/home">首页</router-link></el-menu-item>
-            <el-menu-item index="2"><router-link to="/course">课程</router-link></el-menu-item>
-            <el-menu-item index="3"><router-link to="/test">测试</router-link></el-menu-item>
-            <el-menu-item index="4"><router-link to="/my">我的</router-link></el-menu-item>
+        <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" router="true">
+            <el-menu-item index="courseinfo">首页</el-menu-item>
+            <el-menu-item index="course">课程</el-menu-item>
+            <el-menu-item index="test">测试</el-menu-item>
+            <el-menu-item index="my">我的</el-menu-item>
         </el-menu>
     </div>
 </template>
@@ -24,14 +24,13 @@
     }
   </script>
 
-  <style>
-    .el-menu-demo{
+  <style scoped>
+    .el-menu{
         display: flex;
         justify-content: space-between;
         align-content: center;
-        margin: 0;
     }
-    a {
-        font-size: 1.5rem;
+    .el-menu-item{
+      font-size: 1.3rem;
     }
   </style>

@@ -1,17 +1,15 @@
 <template>
-  <!-- <div id="app"> -->
-  <el-container class="layout">
+  <!-- <el-container class="layout">
     <el-container class="el-main-box">
-      <el-main class="main">
+      <el-main class="main"> -->
         <el-container direction="vertical">
-          <el-header><navbar/></el-header>
+          <el-header><navbar></navbar></el-header>
           <router-view></router-view>
           <el-footer>Footer</el-footer>
         </el-container>
-      </el-main>
+      <!-- </el-main>
     </el-container>
-  </el-container>
-  <!-- </div> -->
+  </el-container> -->
 </template>
 
 <script setup>
@@ -32,6 +30,7 @@
   width: 100%;
   min-height: calc(95vh);
   background-color: rgb(245, 245, 245);
+  padding: 0;
 }
 
 .pagination {
@@ -46,5 +45,6 @@
     color: #333;
     text-align: center;
     line-height: 60px;
+    padding: 0;
   }
 </style>
