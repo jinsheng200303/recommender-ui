@@ -36,15 +36,15 @@
         justify-content: space-between;
     }
     .el-input{
-        width: 25%;
+        width: 30%;
         max-width: 350px;
-        min-width: 200px;
-        margin: 10px 4.16%;
+        min-width: 175px;
+        margin: 10px 20px;
     }
     .el-header-right{
         display: flex;
         align-content: center;
         justify-content: space-between;
-        margin: 10px 4.16%;
+        margin: 10px 20px;
     }
 </style>

@@ -31,13 +31,23 @@ const router = new VueRouter({
     {
       path: '/my',
       name: 'my',
-      component: () => import('@/views/my.vue')
+      component: () => import('@/views/my.vue'),
+      redirect: '/my/myclass',
+      children:[
+        {path:'userinfo',component:()=>import('@/views/userinfo.vue')},
+        {path:'myclass',component:()=>import('@/views/myclass.vue')},
+      ]
     },
     {
       path: '/courseinfo',
       name: 'courseinfo',
       component: () => import('@/views/courseinfo.vue')
-    }
+    },
+    {
+      path: '/userinfo',
+      name: 'userinfo',
+      component: () => import('@/views/userinfo.vue')
+    },
   ]
 })
 

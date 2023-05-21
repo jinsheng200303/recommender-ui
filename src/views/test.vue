@@ -6,11 +6,9 @@
         </el-aside>
         <el-main style="padding: 0;">
           <mainnav></mainnav>
-          <el-container>
             <el-main class="test-card-area">
-              <testcard></testcard>
+              <testcard v-for="p in 30" :key="p"></testcard>
             </el-main>
-          </el-container>
         </el-main>
       </el-container>
     </div>
@@ -36,16 +34,21 @@
     text-align: center;
     min-width: 125px;
     max-width: 250px;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 60px);
   }
   
   .el-main {
     background-color: #E9EEF3;
     color: #333;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 60px);
   }
   .test-card-area{
-    height: calc(100vh - 180px);
+    overflow-y: scroll;
+    /* display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; */
+    height: calc(100vh - 120px);
     background: rgb(250, 250, 250);
   }
  </style>

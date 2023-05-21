@@ -1,16 +1,18 @@
 <template>
-  <div class="course-card-area">
-    <el-card :body-style="{ padding: '20px' }" v-for="o in 25" :key="o">
-        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-        <div style="padding: 14px;">
-          <span>好吃的汉堡</span>
-          <div class="bottom clearfix">
-            <time class="time">{{ currentDate }}</time>
-            <el-button type="text" class="button">操作按钮</el-button>
+  <!-- <div class="course-card-area"> -->
+    <el-tooltip placement="top" content="dsjvsdhb">
+      <el-card :body-style="{ padding: '20px' }" >
+          <img src="../assets/image1.jpg" class="image">
+          <div style="padding: 14px;">
+            <span>好吃的汉堡</span>
+            <div class="bottom clearfix">
+              <time class="time">{{ currentDate }}</time>
+              <el-button type="text" class="button">操作按钮</el-button>
+            </div>
           </div>
-        </div>
-      </el-card>
-  </div>
+        </el-card>
+    </el-tooltip>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -44,6 +46,8 @@
 
   .image {
     width: 100%;
+    height: 250px;
+    object-fit: cover;
     display: block;
   }
 
@@ -57,17 +61,18 @@
       clear: both
   }
   /* 添加内容 */
-  .course-card-area{
+  /* .course-card-area{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-  }
+    align-items: center;
+  } */
   .el-card{
-    margin: 20px;
+    margin-bottom: 40px;
     width: 300px;
   }
   .el-card:hover{
     transform: translateY(-8px);
-    box-shadow: 0 0 10px 2px rgba(0, 0, 0, .3);
+    box-shadow: 0 5px 15px -2px rgba(0, 0, 0, .3);
   }
 </style>

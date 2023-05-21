@@ -8,7 +8,7 @@
           <mainnav></mainnav>
           <el-container>
             <el-main class="course-card-area">
-              <coursecard></coursecard>
+              <coursecard v-for="o in 20" :key="o"></coursecard>
             </el-main>
           </el-container>
         </el-main>
@@ -36,16 +36,20 @@
     text-align: center;
     min-width: 125px;
     max-width: 250px;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 60px);
   }
   
   .el-main {
     background-color: #E9EEF3;
     color: #333;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 60px);
   }
   .course-card-area{
-    height: calc(100vh - 180px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    height: calc(100vh - 120px);
     background: rgb(250, 250, 250);
   }
  </style>
