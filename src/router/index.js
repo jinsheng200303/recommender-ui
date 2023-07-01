@@ -11,7 +11,12 @@ const router = new VueRouter({
     {
       path: '/',
       name: 'index',
-      redirect: '/home'
+      redirect: '/bm'
+    },
+    {
+      path: '/bm',
+      name: 'bm',
+      component: () => import('@/views/backgroundManager/bm.vue')
     },
     {
       path: '/home',
