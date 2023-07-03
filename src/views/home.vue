@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { getTestData1 } from "@/api/graphApis.js";
 import coursecard from './coursecard.vue' 
 
 export default {

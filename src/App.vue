@@ -19,9 +19,6 @@
 </script>
 
 <style scoped>
-  /* .el-container{
-    min-width: 650px;
-  } */
   #app{
     height: 100%;
   }
