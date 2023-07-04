@@ -1,0 +1,161 @@
+<template>
+    <div>
+        <editStudent ref="editStudent"></editStudent>
+        <el-table
+            :data="studentData.filter(data => !search || data.userId.toString().includes(search) || data.userName.toLowerCase().includes(search.toLowerCase()))"
+            style="width: 100%"
+            @row-click="selectStudent">
+            <el-table-column prop="userId" label="学生id">
+            </el-table-column>
+            <el-table-column prop="userName" label="用户名">
+            </el-table-column>
+            <el-table-column>
+                <template slot="header" slot-scope="scope">
+                    <el-input v-model="search" size="mini" placeholder="输入关键词搜索" />
+                </template>
+                <template slot-scope="scope">
+                    <el-button size="mini" type="primary" @click.stop="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button size="mini" type="danger" @click.stop="handleDelete(scope.$index, scope.row)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+    </div>
+</template>
+
+<script>
+import editStudent from './editStudent.vue'
+import { getClassStudentId,deleteClassStudent } from '@/api/classes'
+import {getUserArrayInfo} from '@/api/user.js'
+export default {
+    components:{
+        editStudent,
+    },
+    data() {
+        return {
+            // "studentData": [
+            //     {
+            //         "age": 0,
+            //         "avatar": "",
+            //         "birth": "",
+            //         "email": "",
+            //         "gender": "",
+            //         "idCard": "",
+            //         "name": "",
+            //         "password": "",
+            //         "phoneNumber": "",
+            //         "politics": "",
+            //         "profession": "",
+            //         "school": "",
+            //         "synopsis": "",
+            //         "userId": 0,
+            //         "userName": ""
+            //     }
+            // ],
+            studentData: [], //学生表格数据
+            temStudent: {   //编辑时暂存学生信息
+                age: 0,
+                avatar: "",
+                birth: "",
+                email: "",
+                gender: "",
+                idCard: "",
+                name: "",
+                password: "",
+                phoneNumber: "",
+                politics: "",
+                profession: "",
+                school: "",
+                synopsis: "",
+                userId: 0,
+                userName: ""
+            },
+            search: '', //搜索框
+        }
+    },
+    methods: {
+        //编辑按钮
+        handleEdit(index, row) {
+            this.$nextTick(() => {
+                this.$refs.editStudent.dialogVisible();
+            })
+            this.deepCopyTotem(row);
+            this.$nextTick(() => {
+                this.$refs.editStudent.upDateForm(this.temStudent);
+            })
+        },
+        //删除按钮
+        handleDelete(index, row) {
+            this.deleteLine(index, row);
+        },
+        //获取表格数据
+        getData() {
+            getClassStudentId(this.$route.query.classId,1)
+            .then((res1) => {
+                let userId = [];
+                res1.data.forEach((item) => {
+                    userId.push(item.userId)
+                });
+                if(userId !== undefined&&userId.length>0){
+                    getUserArrayInfo(userId)
+                    .then((res2) => {
+                        res2.data.data.forEach((item) => {
+                            this.studentData.push(item)
+                        });
+                    })
+                }
+            });
+        },
+        //删除当前行数据
+        deleteLine(index, row) {
+            this.$confirm("此操作将永久删除, 是否继续?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            })
+            .then(() => {
+                let deleteId = [];
+                deleteId.push(row.userId)
+                deleteClassStudent(deleteId)
+                .then((res) => {
+                    if (res.data.code == 200) {
+                        console.log(deleteId);
+                        this.$delete(this.studentData,index);
+                        this.$message.success("删除成功！");
+                    } else {
+                        this.$message.error("删除失败！");
+                    }
+                });
+            }).catch(() => {
+                this.$message({ type: "info", message: "已取消删除" });
+            });
+        },
+
+        //row->temCouse深拷贝
+        deepCopyTotem(row) {
+            this.temStudent.age = row.age;
+            this.temStudent.avatar = row.avatar;
+            this.temStudent.birth = row.birth;
+            this.temStudent.email = row.email;
+            this.temStudent.gender = row.gender;
+            this.temStudent.idCard = row.idCard;
+            this.temStudent.name = row.name;
+            this.temStudent.password = row.password;
+            this.temStudent.phoneNumber = row.phoneNumber;
+            this.temStudent.politics = row.politics;
+            this.temStudent.profession = row.profession;
+            this.temStudent.school = row.school;
+            this.temStudent.synopsis = row.synopsis;
+            this.temStudent.userId = row.userId;
+            this.temStudent.userName = row.userName;
+        },
+        selectStudent(row,column,event){
+            this.$message.success("成功选择此学生--"+row.userName);
+        }
+    },
+    mounted() {
+        this.getData();
+    }
+}
+</script>
+
+<style scoped></style>
