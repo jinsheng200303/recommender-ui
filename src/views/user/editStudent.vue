@@ -57,7 +57,7 @@
             if (valid) {
                 axios.post("http://localhost:80/student/edit",this.editStudentForm)
                 .then((res) => {
-                    if (res.data) {
+                    if (res) {
                         this.dialogFormVisible=false;
                         this.$message.success("修改成功！");
                         this.$emit("call-father");

@@ -16,7 +16,7 @@
   </template>
 
   <script>
-  import {userLogin} from '@/api/user.js'
+  import {userLogin} from '@/api/userApis.js'
     export default {
       data() {
         var validateName = (rule, value, callback) => {

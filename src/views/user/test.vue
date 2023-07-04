@@ -1,6 +1,6 @@
 <template>
     <div>
-        anouncement
+        bbb
     </div>
 </template>
 

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {deleteClass} from '@/api/classes.js'
+import {deleteClass} from '@/api/classApis.js'
 export default {
     props: ["records"],
     data() {

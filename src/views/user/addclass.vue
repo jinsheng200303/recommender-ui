@@ -16,7 +16,7 @@
   </template>
 
   <script>
-  import {addClass} from '@/api/classes.js'
+  import {addClass} from '@/api/classApis.js'
     export default {
       data() {
         var validateClassName = (rule, value, callback) => {
@@ -59,12 +59,12 @@
                 this.isLoading = true;
                 addClass(this.classes)
                 .then((res) => {
-                    if (res.data.code == 200) {
+                    if (res.code == 200) {
                         this.dialogFormVisible=false;
-                        this.$message.success(res.data.msg);
+                        this.$message.success(res.msg);
                         this.$emit("call-father");
                     } else {
-                        this.$message.error(res.data.msg);
+                        this.$message.error(res.msg);
                     }
                 });
             }

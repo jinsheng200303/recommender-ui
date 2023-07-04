@@ -30,13 +30,10 @@
       }
     },
     created() {
-      // console.log("Home created!");
+      
     },
     mounted() {
-      // //请求接口数据
-      // getTestData1().then((res) => {
-      //     console.log(res);
-      // });
+
     },
   };
   

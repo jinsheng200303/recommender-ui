@@ -24,8 +24,8 @@
 
 <script>
 import editStudent from './editStudent.vue'
-import { getClassStudentId,deleteClassStudent } from '@/api/classes'
-import {getUserArrayInfo} from '@/api/user.js'
+import { getClassStudentId,deleteClassStudent } from '@/api/classApis'
+import {getUserArrayInfo} from '@/api/userApis.js'
 export default {
     components:{
         editStudent,
@@ -92,13 +92,13 @@ export default {
             getClassStudentId(this.$route.query.classId,1)
             .then((res1) => {
                 let userId = [];
-                res1.data.forEach((item) => {
+                res1.forEach((item) => {
                     userId.push(item.userId)
                 });
                 if(userId !== undefined&&userId.length>0){
                     getUserArrayInfo(userId)
                     .then((res2) => {
-                        res2.data.data.forEach((item) => {
+                        res2.data.forEach((item) => {
                             this.studentData.push(item)
                         });
                     })
@@ -117,7 +117,7 @@ export default {
                 deleteId.push(row.userId)
                 deleteClassStudent(deleteId)
                 .then((res) => {
-                    if (res.data.code == 200) {
+                    if (res.code == 200) {
                         console.log(deleteId);
                         this.$delete(this.studentData,index);
                         this.$message.success("删除成功！");

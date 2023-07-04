@@ -31,7 +31,7 @@
 <script>
 import classcard from './classcard.vue'
 import addClass from './addclass.vue'
-import { classPage } from '@/api/classes.js'
+import { classPage } from '@/api/classApis.js'
 export default {
     components:{
         classcard,
@@ -80,8 +80,8 @@ export default {
             classPage(this.pageInfo)
             .then((res) => {
                 this.pageInfo.pageNum++;
-                this.classData.push(...res.data.data.records);
-                this.newDataLength = res.data.data.records.length;
+                this.classData.push(...res.data.records);
+                this.newDataLength = res.data.records.length;
           });
         },
         //删除按钮显示

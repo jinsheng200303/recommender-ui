@@ -41,7 +41,7 @@ export function addClass(classes) {
 //获取课堂学生或教师 id--roleId=1 学生，roleId=2 教师
 export function getClassStudentId(classId,roleId) {
     return request({
-        url: '/class-user/class-student',
+        url: '/class-user/class-student-query',
         method: 'post',
         params:{
             classId,
