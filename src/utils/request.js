@@ -39,7 +39,15 @@ request.interceptors.response.use(
         if (typeof res === 'string') {
             res = res ? JSON.parse(res) : res
         }
+        // 当权限验证不通过的时候给出提示
+        if (res.code === '401') {
+            ElementUI.Message({
+                message: res.msg,
+                type: 'error'
+            });
+        }
         return res;
+        
     },
     error => {
         console.log('err' + error) // for debug

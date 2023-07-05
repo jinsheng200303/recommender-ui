@@ -15,7 +15,7 @@
         <div style="height: 60px; line-height: 60px; text-align: center">
           <b style="color: black">后台管理系统</b>
         </div>
-    <el-menu-item index="/ManagePage/testPage">
+    <el-menu-item index="/ManagePage/HomePage">
       <template slot="title">
         <i class="el-icon-house"></i>
         <span slot="title">主页</span>
@@ -40,4 +40,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

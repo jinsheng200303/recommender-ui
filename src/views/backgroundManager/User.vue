@@ -3,7 +3,6 @@
     <div style="margin: 10px 0">
             <el-input style="width: 200px" placeholder="请输入名称" suffix-icon="el-icon-user" v-model="pageInfo.username"></el-input>
             <el-input style="width: 200px" placeholder="请输入邮箱" suffix-icon="el-icon-message" class="ml" v-model="pageInfo.email"></el-input>
-            <!-- <el-input style="width: 200px" placeholder="请输入地址" suffix-icon="el-icon-position" class="ml" ></el-input> -->
             <el-button class="ml" type="primary" @click="load">搜索 <i class="el-icon-search"></i></el-button>
           </div>
 
@@ -18,11 +17,10 @@
               title="您确定批量删除这些数据吗？"
               @confirm="delBatch"
           >
-            <el-button type="danger" class="ml" slot="reference">批量删除 <i class="el-icon-remove-outline"></i></el-button>
+            <el-button type="danger" class="ml" slot="reference" :disabled="this.multipleSelection.length == 0  ?  true : false">
+              批量删除 <i class="el-icon-remove-outline"></i></el-button>
           </el-popconfirm>
-            <!-- <el-button type="primary">导入 <i class="el-icon-bottom"></i></el-button>
-            <el-button type="primary">导出 <i class="el-icon-top"></i></el-button> -->
-          </div>
+            </div>
 
           <el-table :data="tableData" border stripe :header-cell-class-name="headerBg" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
@@ -60,14 +58,17 @@
             </el-pagination>
           </div>
 
-          <el-dialog title="新增/修改用户信息" :visible.sync="dialogFormVisible" width="30%" center>
+          <el-dialog title="新增/修改用户信息" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false>
           <el-form label-width="80px" size="small">
             <el-form-item label="用户名">
               <el-input v-model="form.userName" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="性别">
-              <el-input v-model="form.gender" autocomplete="off"></el-input>
-            </el-form-item>
+            <div style="margin:0 0 10px 0;">
+              <span style="margin-left:38px">性别</span>
+              <el-radio v-model="form.gender" label="M" border style="margin-left:12px;">男</el-radio>
+              <el-radio v-model="form.gender" label="F" border style="margin-left:25px;">女</el-radio>
+              <el-radio v-model="form.gender" label="NULL" border style="margin-left:25px;">其他</el-radio>
+            </div>
             <el-form-item label="邮箱">
               <el-input v-model="form.email" autocomplete="off"></el-input>
             </el-form-item>
@@ -84,7 +85,7 @@
           </div>
         </el-dialog>
 
-        <el-dialog title="删除用户" :visible.sync="delDialogFormVisible" width="30%" center>
+        <el-dialog title="删除用户" :visible.sync="delDialogFormVisible" width="30%" center :close-on-click-modal=false>
           <span>您确定要删除该用户的用户信息吗？</span>
           <div slot="footer" class="dialog-footer">
             <el-button @click="delDialogFormVisible = false">取 消</el-button>
@@ -186,7 +187,7 @@ export default {
       this.form = {}
     },
     handleEdit(row) {
-      this.form = row
+      this.form = Object.assign({},row)
       this.dialogFormVisible = true
     },
     handleDelete(delUserId){
@@ -207,7 +208,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .el-menu-item,
 .el-menu-item-group,
@@ -218,10 +218,14 @@ export default {
 .example::-webkit-scrollbar {
   display: none;
 }
-.headerBg {
-  background: rgb(240, 240, 210)!important;
-}
+
 .ml{
   margin-left: 5px;
+}
+</style>
+
+<style>
+.headerBg {
+  background: rgb(240, 240, 210)!important;
 }
 </style>

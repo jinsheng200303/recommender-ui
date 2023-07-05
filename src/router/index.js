@@ -15,13 +15,13 @@ const router = new VueRouter({
       children: [
         {
           path: 'userManagePage',
-          name: 'userManagePage',
+          name: '用户管理',
           component: () => import('@/views/backgroundManager/User.vue')
         },
         {
-          path: 'testPage',
-          name: 'testPage',
-          component: () => import('@/views/backgroundManager/testPage.vue')
+          path: 'HomePage',
+          name: '主页',
+          component: () => import('@/views/backgroundManager/HomePage.vue')
         },
       ]
     },
