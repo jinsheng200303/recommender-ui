@@ -2,8 +2,6 @@
     <div>
       <el-main>
         <div class="home-content">
-            <el-button type="primary" size="small" @click="show_login">登录</el-button>
-            <login_register ref="login_dialog"></login_register>
         </div>
         <el-footer>Footer</el-footer>
       </el-main>
@@ -11,23 +9,15 @@
   </template>
   
   <script>
-  import login_register from "./login_register.vue";
   export default {
     name: "home",
-    components: {
-      login_register
-    },
     data() {
       return {
          homeData: "" 
         };
     },
     methods: {
-      show_login() {
-        this.$nextTick(()=>{
-          this.$refs.login_dialog.dialogVisible();
-        })
-      }
+      
     },
     created() {
       

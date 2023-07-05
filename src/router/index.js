@@ -6,27 +6,37 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'hash',
-  routes: [{
-      path: '/',
-      name: '用户管理',
-      redirect: '/ManagePage',
+  routes: [
+    {
+      path: '/ManagePage',
+      name: 'ManagePage',
+      redirect: '/ManagePage/userManagePage',
       component: () => import('@/views/backgroundManager/ManagePage.vue'),
-      children: [{
-        path: 'ManagePage',
-        name: '用户管理',
-        component: () => import('@/views/backgroundManager/User.vue')
-      }, ]
+      children: [
+        {
+          path: 'userManagePage',
+          name: 'userManagePage',
+          component: () => import('@/views/backgroundManager/User.vue')
+        },
+        {
+          path: 'testPage',
+          name: 'testPage',
+          component: () => import('@/views/backgroundManager/testPage.vue')
+        },
+      ]
     },
     {
-      path: '/testPage',
-      name: '主页',
-      component: () => import('@/views/backgroundManager/testPage.vue')
+      path: '/login',
+      name: 'loginRegiter',
+      component: () => import('@/views/user/login_register.vue')
     },
     {
       path: '/index_content',
       name: 'index_content',
+      redirect: '/index_content/home',
       component: () => import('@/views/user/index_content.vue'),
-      children: [{
+      children: [
+        {
           path: 'home',
           name: 'home',
           component: () => import('@/views/user/home.vue')
@@ -49,6 +59,24 @@ const router = new VueRouter({
       ]
     },
     {
+      path: '/classinfo',
+      name: 'classinfo',
+      component: () => import('@/views/user/classinfo.vue'),
+      redirect: '/classinfo/student',
+      children: [
+        {
+          path: '/classinfo/student',
+          name: 'student',
+          component: () => import('@/views/user/student.vue'),
+        },
+        {
+          path: '/classinfo/announcement',
+          name: 'announcement',
+          component: () => import('@/views/user/announcement.vue'),
+        },
+      ]
+    },
+    {
       path: '/myGraph',
       name: 'graph',
       component: () => import('@/views/graph/graphTest1.vue')
@@ -60,7 +88,30 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   localStorage.setItem("currentPathName", to.name) // 设置当前的路由名称，为了在Header组件中去使用
   store.commit("setPath") // 触发store的数据更新
-  next() // 放行路由
+  if (to.path.startsWith('/login')) {
+    window.sessionStorage.removeItem('token')
+    next()
+  } else {
+    let user = window.sessionStorage.getItem('token')
+    if (!user) {
+      next({
+        path: '/login'
+      })
+    } else {
+      if(to.path == '/'){
+        if (JSON.parse(window.sessionStorage.getItem("userInfo")).roleId == 1 || JSON.parse(window.sessionStorage.getItem("userInfo")).roleId == 2) {
+          next({
+            path: '/index_content'
+          })
+        }else {
+          next({
+            path: '/ManagePage'
+          })
+        }
+      }
+      next()
+    }
+  }
 })
 
 export default router

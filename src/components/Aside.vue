@@ -15,7 +15,7 @@
         <div style="height: 60px; line-height: 60px; text-align: center">
           <b style="color: black">后台管理系统</b>
         </div>
-    <el-menu-item index="/testPage">
+    <el-menu-item index="/ManagePage/testPage">
       <template slot="title">
         <i class="el-icon-house"></i>
         <span slot="title">主页</span>
@@ -25,7 +25,7 @@
       <template slot="title">
         <i class="el-icon-menu"></i><span slot="title">系统管理</span>
       </template>
-      <el-menu-item index="/ManagePage">
+      <el-menu-item index="/ManagePage/userManagePage">
         <i class="el-icon-s-custom"></i>
         <span slot="title">用户管理</span>
       </el-menu-item>
