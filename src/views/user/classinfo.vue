@@ -69,7 +69,12 @@
             },
         },
         created() {
-            this.activeClassInfoPath = sessionStorage.getItem("classInfoPath");
+            if(sessionStorage.getItem("classInfoPath") == undefined
+            || sessionStorage.getItem("classInfoPath") == null){
+                this.activeClassInfoPath = '/classinfo/student';
+            }else {
+                this.activeClassInfoPath = sessionStorage.getItem("classInfoPath");
+            }
         },
     }
 </script>

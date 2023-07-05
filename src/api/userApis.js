@@ -52,3 +52,12 @@ export function getUserArrayInfo(IDS) {
         data: IDS
     })
 }
+
+//课堂用户关联的新增/修改
+export function joinClass(classUser) {
+    return request({
+        url: '/class-user/save',
+        method: 'post',
+        data: classUser
+    })
+}

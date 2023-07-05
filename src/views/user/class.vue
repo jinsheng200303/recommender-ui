@@ -8,7 +8,7 @@
                 v-model="input">
             </el-input>
             <div class="el-header-right">
-                <el-button type="primary" size="small" @click="addClass">添  加</el-button>
+                <el-button type="primary" size="small" @click="addClass"><i class="el-icon-plus"></i>添加</el-button>
                 <!-- <el-button type="primary" size="small" @click="showButton">编  辑</el-button> -->
             </div>
         </el-header>
@@ -25,17 +25,20 @@
             <p class="infinite-footer" v-if="noMore&&!loading">没有更多了</p>
         </el-main>
         <addClass ref="addClass" @call-father="resetAfterAdd"></addClass>
+        <joinclass ref="joinclass"></joinclass>
     </el-container>
 </template>
 
 <script>
 import classcard from './classcard.vue'
 import addClass from './addclass.vue'
+import joinclass from './joinclass.vue'
 import { classPage } from '@/api/classApis.js'
 export default {
     components:{
         classcard,
         addClass,
+        joinclass,
     },
     data() {
         // "classData": [
@@ -94,9 +97,16 @@ export default {
         },
         //增加课堂
         addClass(){
-            this.$nextTick(()=>{
-                this.$refs.addClass.dialogVisible();
-            })
+            let roleId = JSON.parse(sessionStorage.getItem("userInfo")).roleId;
+            if(roleId == 1){
+                this.$nextTick(()=>{
+                    this.$refs.joinclass.dialogVisible();
+                })
+            }else if(roleId == 2){
+                this.$nextTick(()=>{
+                    this.$refs.addClass.dialogVisible();
+                })
+            }
         },
         //重置课程卡片
         resetAfterAdd(){
