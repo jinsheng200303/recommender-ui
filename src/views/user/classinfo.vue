@@ -12,11 +12,14 @@
                         class="asideMenu"
                         :router="true"
                         default-active="/classinfo/student">
-                        <el-menu-item index="/classinfo/announcement">
+                        <!-- <el-menu-item index="/classinfo/announcement">
                             <span slot="title">公 告</span>
                         </el-menu-item>
                         <el-menu-item index="/classinfo/student">
                             <span slot="title">学 员</span>
+                        </el-menu-item> -->
+                        <el-menu-item 
+                            v-for="item in asideNavData">
                         </el-menu-item>
                     </el-menu>
                 </el-aside>
@@ -32,6 +35,19 @@
     export default{
         data() {
             return {
+                //侧边导航栏数据
+                asideNavData: [
+                    {
+                        key: 1,
+                        url: '/classinfo/announcement',
+                        name: '公 告',
+                    },
+                    {
+                        key: 2,
+                        url: '/classinfo/student',
+                        name: '学 员',
+                    },
+                ],
                 //上一个窗口传递参数接收
                 classId: 0,
                 className: "",

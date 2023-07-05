@@ -6,7 +6,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button @click="dialogVisible">取 消</el-button>
             <el-button type="primary" @click="submitForm('editStudentForm')">确 定</el-button>
         </div>
     </el-dialog>
@@ -19,7 +19,7 @@
         var validateGrade = (rule, value, callback) => {
           if (!value) {
             return callback(new Error('成绩不能为空'));
-          } else if (!Number.isInteger(value)) {
+          } else if (!Number.isInteger(parseInt(value))) {
             callback(new Error('请输入数字值'));
           } else {
             callback();
@@ -68,15 +68,15 @@
             }
           });
         },
-        // resetForm(formName) {
-        //   this.$refs[formName].resetFields();
-        // },
+        resetForm(formName) {
+          this.$refs[formName].resetFields();
+        },
         //表格一行信息传递给表单
         upDateForm(temStudentInfo){
             this.editStudentForm=temStudentInfo;
         },
         dialogVisible(){
-            this.dialogFormVisible = true;
+            this.dialogFormVisible = !this.dialogFormVisible;
         },
       }
     }
