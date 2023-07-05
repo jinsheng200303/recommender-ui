@@ -9,6 +9,7 @@
             height: 100%;
             color: #fff;
             overflow-x: hidden;
+            border-right: none;
           "
         >
         <div style="height: 60px; line-height: 60px; text-align: center">
