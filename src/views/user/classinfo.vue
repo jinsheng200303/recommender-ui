@@ -2,24 +2,22 @@
     <div>
         <el-container direction="vertical">
             <div class="header">
-                <div class="title"> {{ className }} </div>
-                <div class="info idInfo"> {{ classId }} </div>
-                <div class="info timeInfo"> {{ createdTime.substring(0,10) }}  </div>
+                <div class="title"> {{ classInfo.className }} </div>
+                <div class="info idInfo"> {{ classInfo.classId }} </div>
+                <div class="info timeInfo"> {{ time.substring(0,10) }}  </div>
             </div>
             <el-container>
                 <el-aside width="15%">
                     <el-menu
                         class="asideMenu"
                         :router="true"
-                        default-active="/classinfo/student">
-                        <!-- <el-menu-item index="/classinfo/announcement">
-                            <span slot="title">公 告</span>
-                        </el-menu-item>
-                        <el-menu-item index="/classinfo/student">
-                            <span slot="title">学 员</span>
-                        </el-menu-item> -->
+                        @select="handleSelect"
+                        :default-active="activeClassInfoPath">
                         <el-menu-item 
-                            v-for="item in asideNavData">
+                            v-for="item in asideNavData"
+                            :key="item.key"
+                            :index="item.url">
+                            <span slot="title">{{ item.name }}</span>
                         </el-menu-item>
                     </el-menu>
                 </el-aside>
@@ -32,6 +30,7 @@
 </template>
 
 <script>
+
     export default{
         data() {
             return {
@@ -49,23 +48,28 @@
                     },
                 ],
                 //上一个窗口传递参数接收
-                classId: 0,
-                className: "",
-                createdTime: "",
+                // classInfo:{
+                //     classId: 0,
+                //     className: "",
+                //     createdTime: "",
+                //     classPicture: "",
+                // },
+                classInfo: {},
+                time: "",
+                activeClassInfoPath: '',
             }
         },
         mounted() {
-            this.classId = this.$route.query.classId;
-            this.className = this.$route.query.className;
-            this.createdTime = this.$route.query.createdTime;
+            this.classInfo = JSON.parse(window.sessionStorage.getItem("classInfo"));
+            this.time = this.classInfo.createdTime;
         },
         methods: {
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
+            handleSelect(key, keyPath) {
+                sessionStorage.setItem("classInfoPath",key);
             },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
-            }
+        },
+        created() {
+            this.activeClassInfoPath = sessionStorage.getItem("classInfoPath");
         },
     }
 </script>

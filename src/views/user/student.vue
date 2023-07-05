@@ -14,7 +14,7 @@
                     <el-input v-model="search" size="mini" placeholder="输入关键词搜索" />
                 </template>
                 <template slot-scope="scope">
-                    <el-button size="mini" type="primary" @click.stop="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <!-- <el-button size="mini" type="primary" @click.stop="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
                     <el-button size="mini" type="danger" @click.stop="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
@@ -89,7 +89,8 @@ export default {
         },
         //获取表格数据
         getData() {
-            getClassStudentId(this.$route.query.classId,1)
+            let classId = JSON.parse(window.sessionStorage.getItem("classInfo")).classId
+            getClassStudentId(classId,1)
             .then((res1) => {
                 let userId = [];
                 res1.forEach((item) => {

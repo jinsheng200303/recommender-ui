@@ -32,12 +32,13 @@ export default {
         newPage(records){
             let routeData = this.$router.resolve({
                 path: '/classinfo',
-                query: {
-                    classId: records.classId,
-                    className: records.className,
-                    createdTime: records.createdTime,
-                }
+                // query: {
+                //     classId: records.classId,
+                //     className: records.className,
+                //     createdTime: records.createdTime,
+                // }
             })
+            window.sessionStorage.setItem("classInfo",JSON.stringify(records))
             window.open(routeData.href, '_blank');
         }
     },
