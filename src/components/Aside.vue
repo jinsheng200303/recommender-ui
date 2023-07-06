@@ -29,7 +29,17 @@
         <i class="el-icon-s-custom"></i>
         <span slot="title">用户管理</span>
       </el-menu-item>
+      <el-menu-item index="/ManagePage/Role">
+        <i class="el-icon-user"></i>
+        <span slot="title">角色管理</span>
+      </el-menu-item>
     </el-submenu>
+    <el-menu-item index="/ManagePage/Class">
+      <template slot="title">
+        <i class="el-icon-data-line"></i>
+        <span slot="title">课堂管理</span>
+      </template>
+    </el-menu-item>
   </el-menu>
 </template>
 
@@ -40,5 +50,14 @@ export default {
 </script>
 
 <style scoped>
+.el-menu-item,
+.el-menu-item-group,
+.el-menu {
+  color: rgb(101, 120, 230);
+  background-color: rgb(166, 208, 211);
+}
 
+.el-menu-item:hover{
+  background-color: rgb(249, 250, 250);
+}
 </style>

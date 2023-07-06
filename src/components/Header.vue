@@ -3,7 +3,7 @@
     <div style="flex: 1;">
       <!-- <span :class="collapseBtnClass" style="cursor: pointer; font-size: 18px" @click="collapse"></span> -->
       <el-breadcrumb separator="/" style="float:left;line-height: 60px;display: inline-block; margin-left: 10px">
-        <el-breadcrumb-item :to="'/'">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="'/'">后台管理</el-breadcrumb-item>
         <el-breadcrumb-item>{{ currentPathName }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
