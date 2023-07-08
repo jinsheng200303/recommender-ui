@@ -19,20 +19,20 @@
           </div>
           <div ref="registerInfo">
               <el-form-item label="确认密码:" prop="rePassword">
-                <el-input v-model="loginRegisterInfo.rePassword"></el-input>
+                <el-input v-model="loginRegisterInfo.rePassword" :disabled="disableInput"></el-input>
               </el-form-item>
               <el-form-item label="用户名:" prop="userName">
-                <el-input v-model="loginRegisterInfo.userName" autocomplete="on"></el-input>
+                <el-input v-model="loginRegisterInfo.userName" autocomplete="on" :disabled="disableInput"></el-input>
               </el-form-item>
               <el-form-item label="职业:" prop="role">
-                <el-select v-model="selectValue" placeholder="请选择" @change="afterSelect" style="width: 100%;">
+                <el-select v-model="selectValue" placeholder="请选择" @change="afterSelect" style="width: 100%;" :disabled="disableInput">
                   <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="验证码:" prop="code">
-                <el-input v-model="loginRegisterInfo.code">
-                  <el-button slot="append" @click="userGetCode" :loading="isGetCode">获取验证码</el-button>
+                <el-input v-model="loginRegisterInfo.code" :disabled="disableInput">
+                  <el-button slot="append" @click="userGetCode" :loading="isGetCode" :disabled="disableInput">获取验证码</el-button>
                 </el-input>
               </el-form-item>
           </div>
@@ -292,6 +292,13 @@ export default {
         return "注册";
       }else if(this.tableState == 2){
         return "登录";
+      }
+    },
+    disableInput(){
+      if(this.tableState == 1){
+        return true;
+      }else if(this.tableState == 2){
+        return false;
       }
     }
   },
