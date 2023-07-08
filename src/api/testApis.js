@@ -36,3 +36,22 @@ export function getQuestionPage(questionsQuery) {
         data: questionsQuery,
     })
 }
+
+//做题记录保存或更新
+// {
+// 	"answer": "",
+// 	"examId": 0,
+// 	"paperId": 0,
+// 	"questionId": 0,
+// 	"recordId": 0,
+// 	"score": "",
+// 	"status": 0,
+// 	"userId": 0
+// }
+export function updateRecords(records) {
+    return request({
+        url: '/records/save',
+        method: 'post',
+        data: records,
+    })
+}
