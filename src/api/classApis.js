@@ -50,11 +50,14 @@ export function getClassStudentId(classId,roleId) {
     })
 }
 
-//删除课堂用户关联信息  IDS用户id数组
-export function deleteClassStudent(IDS) {
+//删除指定课堂学生  studentId为数组
+export function deleteClassStudent(classId,studentId) {
     return request({
-        url: '/class-user/delBatch',
+        url: '/class-user/class-student-del',
         method: 'post',
-        data: IDS
+        params: {
+            classId,
+        },
+        data:studentId,
     })
 }

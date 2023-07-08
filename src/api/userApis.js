@@ -61,3 +61,23 @@ export function joinClass(classUser) {
         data: classUser
     })
 }
+
+//根据用户ID查找用户信息
+export function getUserInfoById(userId) {
+    return request({
+        url: '/person/getById',
+        method: 'get',
+        params: {
+            userId: userId,
+        }
+    })
+}
+
+//用户新增/修改
+export function editUserInfo(userInfo) {
+    return request({
+        url: '/person/save',
+        method: 'post',
+        data: userInfo
+    })
+}
