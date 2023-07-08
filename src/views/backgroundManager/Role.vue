@@ -1,13 +1,13 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-            <el-input style="width: 200px" placeholder="请输入名称" suffix-icon="el-icon-user" v-model="pageInfo.username"></el-input>
-            <el-input style="width: 200px" placeholder="请输入邮箱" suffix-icon="el-icon-message" class="ml" v-model="pageInfo.email"></el-input>
+            <el-input style="width: 200px" placeholder="请输入用户名" suffix-icon="el-icon-user" v-model="userInfo.userName"></el-input>
+            <el-input style="width: 200px" placeholder="请输入角色名" suffix-icon="el-icon-s-custom" class="ml" v-model="userInfo.roleName"></el-input>
             <el-button class="ml" type="primary" @click="load">搜索 <i class="el-icon-search"></i></el-button>
           </div>
 
           <div style="margin: 10px 0">
-            <el-button type="primary" @click="handleAdd">新增用户 <i class="el-icon-circle-plus-outline"></i></el-button>
+            <el-button type="primary" @click="handleAdd">新增用户角色<i class="el-icon-circle-plus-outline"></i></el-button>
             <el-popconfirm
               class="ml"
               confirm-button-text='确定'
@@ -24,22 +24,18 @@
 
           <el-table :data="tableData" border stripe :header-cell-class-name="headerBg" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="userId" label="ID" width="80">
+            <el-table-column prop="personRoleId" label="ID" width="180">
             </el-table-column>
-            <el-table-column prop="userName" label="用户名" width="140">
+            <el-table-column prop="userId" label="用户ID" width="240">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="120">
+            <el-table-column prop="userName" label="用户名" width="240">
             </el-table-column>
-            <el-table-column prop="gender" label="性别">
-            </el-table-column>
-            <el-table-column prop="email" label="邮箱">
-            </el-table-column>
-            <el-table-column prop="phoneNumber" label="电话">
+            <el-table-column prop="roleName" label="用户角色" width="260">
             </el-table-column>
             <el-table-column label="操作"  width="300" align="center">
               <template slot-scope="scope">
               <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
-              <el-button type="danger" @click="handleDelete(scope.row.userId)" slot="reference" class="ml">删除 <i class="el-icon-remove-outline"></i></el-button>
+              <el-button type="danger" @click="handleDelete(scope.row.personRoleId)" slot="reference" class="ml">删除 <i class="el-icon-remove-outline"></i></el-button>
 
             </template>
             
@@ -58,26 +54,35 @@
             </el-pagination>
           </div>
 
-          <el-dialog title="新增/修改用户信息" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false>
+          <el-dialog title="新增用户角色信息" :visible.sync="addDialogFormVisible" width="30%" center :close-on-click-modal=false>
           <el-form label-width="80px" size="small">
-            <el-form-item label="用户名">
-              <el-input v-model="form.userName" autocomplete="off"></el-input>
+            <el-form-item label="用户ID">
+              <el-input v-model="form2.userId" autocomplete="off"></el-input>
             </el-form-item>
             <div style="margin:0 0 10px 0;">
-              <span style="margin-left:38px">性别</span>
-              <el-radio v-model="form.gender" label="M" border style="margin-left:12px;">男</el-radio>
-              <el-radio v-model="form.gender" label="F" border style="margin-left:25px;">女</el-radio>
-              <el-radio v-model="form.gender" label="NULL" border style="margin-left:25px;">其他</el-radio>
+              <span style="margin-left:10px">选择角色</span>
+              <el-radio v-model="form2.roleId" label="1" border style="margin-left:12px;">学生</el-radio>
+              <el-radio v-model="form2.roleId" label="2" border style="margin-left:4px;">教师</el-radio>
+              <el-radio v-model="form2.roleId" label="3" border style="margin-left:4px;">管理员</el-radio>
             </div>
-            <el-form-item label="邮箱">
-              <el-input v-model="form.email" autocomplete="off"></el-input>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="addDialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="add">确 定</el-button>
+          </div>
+        </el-dialog>
+
+          <el-dialog title="修改用户角色信息" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false>
+          <el-form label-width="80px" size="small">
+            <el-form-item label="用户名">
+              <el-input :disabled="true" v-model="form.userName" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密码">
-              <el-input v-model="form.password" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="电话">
-              <el-input v-model="form.phoneNumber" autocomplete="off"></el-input>
-            </el-form-item>
+            <div style="margin:0 0 10px 0;">
+              <span style="margin-left:10px">选择角色</span>
+              <el-radio v-model="form.roleId" label="1" border style="margin-left:12px;">学生</el-radio>
+              <el-radio v-model="form.roleId" label="2" border style="margin-left:4px;">教师</el-radio>
+              <el-radio v-model="form.roleId" label="3" border style="margin-left:4px;">管理员</el-radio>
+            </div>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -85,8 +90,8 @@
           </div>
         </el-dialog>
 
-        <el-dialog title="删除用户" :visible.sync="delDialogFormVisible" width="30%" center :close-on-click-modal=false>
-          <span>您确定要删除该用户的用户信息吗？</span>
+        <el-dialog title="删除用户角色" :visible.sync="delDialogFormVisible" width="30%" center :close-on-click-modal=false>
+          <span>您确定要删除该用户的用户角色信息吗？</span>
           <div slot="footer" class="dialog-footer">
             <el-button @click="delDialogFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="del(delUserId)">
@@ -97,9 +102,11 @@
 </template>
 
 <script>
-import {getUserInfo} from "@/api/userApis.js";
-import {addUser} from "@/api/userApis.js";
-import {DeleteUser} from "@/api/userApis.js";
+import {getUserRoleInfo} from "@/api/userRoleApis.js";
+import {reviceUserRole} from "@/api/userRoleApis.js";
+import {AddUserRole} from "@/api/userRoleApis.js";
+import {DeleteUserRole} from "@/api/userRoleApis.js";
+
 export default { 
     name: "User",
   data() {
@@ -108,21 +115,20 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 5,
-      // userName: "",
-      // email: "",
       form: {},
+      form2: {},
+      addDialogFormVisible: false,
       dialogFormVisible: false,
       delDialogFormVisible: false,
       multipleSelection: [],
       delUserId:[],
-      // collapseBtnClass: 'el-icon-s-fold',
       sideWidth: 200,
       logoTextShow: true,
-      pageInfo:{
+      userInfo:{
         pageNum: 1,
         pageSize: 5,
-        username: "",
-        email: "",
+        userName: "",
+        roleName: "",
       },
       headerBg: 'headerBg'
     };
@@ -133,7 +139,7 @@ export default {
   },
   methods: {
     load() {  
-          getUserInfo(this.pageInfo).then((res) => {
+          getUserRoleInfo(this.userInfo).then((res) => {
           console.log(res)
           this.tableData = res.data.records
           this.total = res.data.total
@@ -145,7 +151,7 @@ export default {
         this.load()
       },
       save() {
-        addUser(this.form).then((res) => {
+        reviceUserRole(this.form).then((res) => {
           console.log(res)
           if (res.msg=='操作成功') {
           this.$message.success("保存成功")
@@ -156,8 +162,22 @@ export default {
         }
       })
     },
+    add(){
+      AddUserRole(this.form2).then((res) => {
+          console.log(res)
+          if (res.msg=='操作成功') {
+          this.$message.success("保存成功")
+          this.addDialogFormVisible = false
+          this.load()
+        } else if(res.msg=='用户角色已经存在！'){
+          this.$message.error("用户角色已经存在！")
+        }else{
+          this.$message.error("用户不存在！")
+        }
+      })
+    },
     del(id) {
-      DeleteUser(id).then(res => {
+      DeleteUserRole(id).then(res => {
         if (res.msg=='操作成功') {
           this.$message.success("删除成功")
           this.load()
@@ -168,8 +188,8 @@ export default {
       })
     },
     delBatch() {
-      let ids = this.multipleSelection.map(v => v.userId)  // [{}, {}, {}] => [1,2,3]
-      DeleteUser(ids).then(res => {
+      let ids = this.multipleSelection.map(v => v.personRoleId)  // [{}, {}, {}] => [1,2,3]
+      DeleteUserRole(ids).then(res => {
         if (res.msg=='操作成功') {
           this.$message.success("删除成功")
           this.load()
@@ -183,7 +203,7 @@ export default {
       this.multipleSelection = val
     },
       handleAdd() {
-      this.dialogFormVisible = true
+      this.addDialogFormVisible = true
       this.form = {}
     },
     handleEdit(row) {
@@ -191,17 +211,18 @@ export default {
       this.dialogFormVisible = true
     },
     handleDelete(delUserId){
+      console.log(this.delUserId)
       this.delDialogFormVisible = true
       this.delUserId[0] = delUserId
     },
     handleSizeChange(pageSize) {
       console.log(pageSize)
-      this.pageInfo.pageSize = pageSize
+      this.userInfo.pageSize = pageSize
       this.load()
     },
     handleCurrentChange(pageNum) {
       console.log(pageNum)
-      this.pageInfo.pageNum = pageNum
+      this.userInfo.pageNum = pageNum
       this.load()
       }
   }
@@ -209,13 +230,12 @@ export default {
 </script>
 
 <style scoped>
-/* .el-menu-item,
+.el-menu-item,
 .el-menu-item-group,
-.el-submenu.el-menu-item,
 .el-menu {
   color: rgb(255, 255, 255);
   background-color: rgb(166, 208, 211);
-} */
+}
 .example::-webkit-scrollbar {
   display: none;
 }
@@ -223,6 +243,8 @@ export default {
 .ml{
   margin-left: 5px;
 }
+
+
 </style>
 
 <style>

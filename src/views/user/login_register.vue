@@ -347,4 +347,5 @@ export default {
   position: absolute;
   right: 0;
 }
+
 </style>
