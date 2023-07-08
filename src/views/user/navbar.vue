@@ -40,7 +40,7 @@
     .el-menu {
         display: flex;
         justify-content: space-between;
-        align-content: center;
+        align-items: center;
     }
     .el-menu-item {
         font-size: 1.3rem;
