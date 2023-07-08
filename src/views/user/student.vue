@@ -32,6 +32,7 @@ export default {
     },
     data() {
         return {
+            classId: 0,
             // "studentData": [
             //     {
             //         "age": 0,
@@ -89,8 +90,7 @@ export default {
         },
         //获取表格数据
         getData() {
-            let classId = JSON.parse(window.sessionStorage.getItem("classInfo")).classId
-            getClassStudentId(classId,1)
+            getClassStudentId(this.classId,1)
             .then((res1) => {
                 let userId = [];
                 res1.forEach((item) => {
@@ -116,19 +116,16 @@ export default {
             .then(() => {
                 let deleteId = [];
                 deleteId.push(row.userId)
-                deleteClassStudent(deleteId)
+                deleteClassStudent(this.classId,deleteId)
                 .then((res) => {
                     if (res.code == 200) {
-                        console.log(deleteId);
                         this.$delete(this.studentData,index);
                         this.$message.success("删除成功！");
                     } else {
                         this.$message.error("删除失败！");
                     }
                 });
-            }).catch(() => {
-                this.$message({ type: "info", message: "已取消删除" });
-            });
+            })
         },
 
         //row->temCouse深拷贝
@@ -152,6 +149,9 @@ export default {
         selectStudent(row,column,event){
             this.$message.success("成功选择此学生--"+row.userName);
         }
+    },
+    created() {
+        this.classId = JSON.parse(window.sessionStorage.getItem("classInfo")).classId
     },
     mounted() {
         this.getData();
