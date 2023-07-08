@@ -97,7 +97,7 @@ export default {
         },
         //增加课堂
         addClass(){
-            let roleId = JSON.parse(sessionStorage.getItem("userInfo")).roleId;
+            let roleId = JSON.parse(localStorage.getItem("userInfo")).roleId;
             if(roleId == 1){
                 this.$nextTick(()=>{
                     this.$refs.joinclass.dialogVisible();

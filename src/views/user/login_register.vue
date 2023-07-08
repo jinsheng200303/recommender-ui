@@ -1,40 +1,58 @@
 <template>
   <div class="container">
-    <div class="login_card">
-      <div class="title">{{ title }}</div>
-      <el-form :model="loginRegisterInfo" :rules="tableState == 1 ? rules1 : rules2" ref="loginRegisterInfo"
-        label-width="80px" class="loginForm">
-        <el-form-item label="邮箱:" prop="email">
-          <el-input v-model="loginRegisterInfo.email"></el-input>
-        </el-form-item>
-        <el-form-item label="密码:" prop="password">
-          <el-input v-model="loginRegisterInfo.password" autocomplete="on"></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码:" prop="rePassword" v-if="rePasswordVisible">
-          <el-input v-model="loginRegisterInfo.rePassword"></el-input>
-        </el-form-item>
-        <el-form-item label="用户名:" prop="userName" v-if="userNameVisible">
-          <el-input v-model="loginRegisterInfo.userName" autocomplete="on"></el-input>
-        </el-form-item>
-        <el-form-item label="职业:" prop="role" v-if="roleVisible">
-          <el-select v-model="selectValue" placeholder="请选择" @change="afterSelect" style="width: 100%;">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="验证码:" prop="code" v-if="codeVisible">
-          <el-input v-model="loginRegisterInfo.code">
-            <el-button slot="append" @click="userGetCode" :loading="isGetCode">获取验证码</el-button>
-          </el-input>
-        </el-form-item>
-      </el-form>
-      <div class="login_card_footer">
-        <el-button class="submitButton" type="primary" @click="submitForm('loginRegisterInfo')" :loading="isLoading">{{ submitButton
-        }}</el-button>
-        <el-button class="stateBuntton" type="text" @click="stateChange('loginRegisterInfo')">{{ stateBuntton
-        }}</el-button>
+      <div class="login_card">
+        <div class="title">{{ titleTip }}</div>
+        <el-form 
+          :model="loginRegisterInfo" 
+          :rules="tableState == 1 ? rules1 : rules2" 
+          ref="loginRegisterInfo"
+          label-width="80px"
+          :style="{height: `${boxHeight}px`}"
+          class="loginRegisterForm">
+          <div ref="loginInfo">
+              <el-form-item label="邮箱:" prop="email">
+                <el-input v-model="loginRegisterInfo.email"></el-input>
+              </el-form-item>
+              <el-form-item label="密码:" prop="password">
+                <el-input v-model="loginRegisterInfo.password" autocomplete="on"></el-input>
+              </el-form-item>
+          </div>
+          <div ref="registerInfo">
+              <el-form-item label="确认密码:" prop="rePassword">
+                <el-input v-model="loginRegisterInfo.rePassword"></el-input>
+              </el-form-item>
+              <el-form-item label="用户名:" prop="userName">
+                <el-input v-model="loginRegisterInfo.userName" autocomplete="on"></el-input>
+              </el-form-item>
+              <el-form-item label="职业:" prop="role">
+                <el-select v-model="selectValue" placeholder="请选择" @change="afterSelect" style="width: 100%;">
+                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="验证码:" prop="code">
+                <el-input v-model="loginRegisterInfo.code">
+                  <el-button slot="append" @click="userGetCode" :loading="isGetCode">获取验证码</el-button>
+                </el-input>
+              </el-form-item>
+          </div>
+        </el-form>
+        <div class="login_card_footer">
+          <el-button 
+            class="submitButton" 
+            type="primary" 
+            @click="submitForm('loginRegisterInfo')" 
+            :loading="isLoading">
+              {{ submitButtonTip}}
+            </el-button>
+          <el-button 
+            class="stateBuntton" 
+            type="text" 
+            @click="stateChange('loginRegisterInfo')">
+              {{ stateBunttonTip}}
+            </el-button>
+        </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -85,9 +103,9 @@ export default {
     };
     return {
       //标题 登录 注册按钮显示文字
-      title: "登 录",
-      submitButton: "登 录",
-      stateBuntton: "注 册",
+      // title: "登 录",
+      // submitButton: "登 录",
+      // stateBuntton: "注 册",
 
       //表格信息
       loginRegisterInfo: {
@@ -108,13 +126,9 @@ export default {
       }],
       //选择器选中值
       selectValue: '1',
-      //表格状态 1为登录 2为忘记密码 3为注册
+      //表格状态 1为登录 2为注册 3为忘记密码
       tableState: 1,
-      //重复密码、角色选择框、邮箱和验证码是否可见
-      rePasswordVisible: false,
-      roleVisible: false,
-      userNameVisible: false,
-      codeVisible: false,
+      boxHeight: 0,
       //登录验证规则
       rules1: {
         email: [
@@ -150,18 +164,12 @@ export default {
     //右侧按钮改变状态
     stateChange(formName) {
       if (this.tableState == 1) {
-        this.tableState = 3;
-        this.title = "注 册";
-        this.submitButton = "注 册";
-        this.stateBuntton = "登 录";
-      } else if (this.tableState == 3) {
+        this.tableState = 2;
+        this.boxHeight = this.$refs.loginInfo.offsetHeight + this.$refs.registerInfo.offsetHeight;
+      } else if (this.tableState == 2) {
         this.tableState = 1;
-        this.title = "登 录";
-        this.submitButton = "登 录";
-        this.stateBuntton = "注 册";
+        this.boxHeight = this.$refs.loginInfo.offsetHeight;
       }
-      this.resetForm(formName);
-      this.changeVisible();
       this.$nextTick(() => {
         this.resetForm(formName);
       })
@@ -179,7 +187,7 @@ export default {
             this.pressLogin(loginInfo);
           }
         });
-      } else if (this.tableState == 3) {
+      } else if (this.tableState == 2) {
         let userRegisterDTO = {
           email: this.loginRegisterInfo.email,
           password: this.loginRegisterInfo.password,
@@ -203,14 +211,14 @@ export default {
             //   "token": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjE4OTMwMDY0NTYxIiwibmFtZSI6bnVsbCwiZXhwIjoxNjg4NTI4Mjk2LCJ1c2VySWQiOjgsImlhdCI6MTY4ODUyNTcwNCwianRpIjoidG9rZW5JZCIsInVzZXJuYW1lIjoiMTIzIn0.T-VVOfv3ZnMg-v49_bCJ7BlGMlaoblOS1lviDqBUXu4"
             // }
             let userInfo = res.data
-            window.sessionStorage.setItem("userInfo", JSON.stringify(userInfo))
-            window.sessionStorage.setItem("token", JSON.stringify(userInfo.token))
+            window.localStorage.setItem("userInfo", JSON.stringify(userInfo))
+            window.localStorage.setItem("token", JSON.stringify(userInfo.token))
             this.$message.success(res.msg);
             if(userInfo.roleId == 1||userInfo.roleId == 2){
               this.$router.push({
                 path: '/index_content'
               })
-            }else {
+            }else if(userInfo.roleId == 3){
               this.$router.push({
                 path: '/ManagePage'
               })
@@ -263,26 +271,33 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    //根据表格状态改变表格视图
-    changeVisible() {
-      if (this.tableState == 1) {
-        this.rePasswordVisible = false;
-        this.roleVisible = false;
-        this.userNameVisible = false;
-        this.codeVisible = false;
-      } else if (this.tableState == 2) {
-        this.rePasswordVisible = true;
-        this.roleVisible = false;
-        this.userNameVisible = false;
-        this.codeVisible = false;
-      } else {
-        this.rePasswordVisible = true;
-        this.roleVisible = true;
-        this.userNameVisible = true;
-        this.codeVisible = true;
+  },
+  computed: {
+    titleTip(){
+      if(this.tableState == 1){
+        return "登录";
+      }else if(this.tableState == 2){
+        return "注册";
       }
     },
-  }
+    submitButtonTip(){
+      if(this.tableState == 1){
+        return "登录";
+      }else if(this.tableState == 2){
+        return "注册";
+      }
+    },
+    stateBunttonTip(){
+      if(this.tableState == 1){
+        return "注册";
+      }else if(this.tableState == 2){
+        return "登录";
+      }
+    }
+  },
+  mounted() {
+    this.boxHeight = this.$refs.loginInfo.offsetHeight;
+  },
 }
 </script>
 
@@ -293,36 +308,41 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url("../../assets/image1.jpg");
+  /* background-position: center center; */
+  background-size: cover;
 }
-
 .login_card {
   width: 400px;
   border-radius: 15px;
   box-shadow: 0 5px 10px -2px rgba(0, 0, 0, .3);
   padding: 40px;
+  backdrop-filter: blur(20px);
+  background-color: rgba(250, 250, 250, .2);
 }
-
 .title {
   font-size: 1.7rem;
   margin-bottom: 20px;
   text-align: center;
 }
-
-.el-form-item {
-  margin-bottom: 30px;
+.loginRegisterForm{
+  margin-right: 30px;
+  overflow: hidden;
+  transition: 0.6s;
 }
-
+.el-form-item {
+  padding-bottom: 30px;
+  margin: 0;
+}
 .login_card_footer {
   position: relative;
   height: 40px;
 }
-
 .submitButton {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
 }
-
 .stateBuntton {
   position: absolute;
   right: 0;

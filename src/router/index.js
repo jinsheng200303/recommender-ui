@@ -89,17 +89,17 @@ router.beforeEach((to, from, next) => {
   localStorage.setItem("currentPathName", to.name) // 设置当前的路由名称，为了在Header组件中去使用
   store.commit("setPath") // 触发store的数据更新
   if (to.path.startsWith('/login')) {
-    window.sessionStorage.removeItem('token')
+    window.localStorage.removeItem('token')
     next()
   } else {
-    let user = window.sessionStorage.getItem('token')
+    let user = window.localStorage.getItem('token')
     if (!user) {
       next({
         path: '/login'
       })
     } else {
       if(to.path == '/'){
-        if (JSON.parse(window.sessionStorage.getItem("userInfo")).roleId == 1 || JSON.parse(window.sessionStorage.getItem("userInfo")).roleId == 2) {
+        if (JSON.parse(window.localStorage.getItem("userInfo")).roleId == 1 || JSON.parse(window.localStorage.getItem("userInfo")).roleId == 2) {
           next({
             path: '/index_content'
           })

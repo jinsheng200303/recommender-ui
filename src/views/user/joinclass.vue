@@ -42,7 +42,7 @@
         };
       },
       created() {
-        this.joinForm.userId = JSON.parse(sessionStorage.getItem("userInfo")).userId;
+        this.joinForm.userId = JSON.parse(localStorage.getItem("userInfo")).userId;
       },
       methods: {
         submitForm(formName) {
