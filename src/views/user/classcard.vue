@@ -1,17 +1,4 @@
 <template>
-    <!-- <div @mouseover="handleHover"
-        @mouseleave="handleLeave">
-        <el-card  
-            :body-style="{ padding: '0px' }" 
-            @click.native="newPage(records)">
-            <img src="https://www.mattbenton.io/img/logos/vue-9-logo-png-transparent-min.png" class="image" :class="{isHoverImg:isHover}">
-            <div class="class-card-info">
-                <el-descriptions :title="records.className" :column="1" size="medium" :class="{isHoverInfo:isHover}">
-                    <el-descriptions-item label="课程id">{{ records.classId }}</el-descriptions-item>
-                </el-descriptions>
-            </div>
-        </el-card>
-    </div> -->
     <div>
         <div class="class-card" 
             @click="newPage(records)" 
@@ -61,7 +48,6 @@ export default {
             }else {
               return this.records.createdTime;
             }
-            return this.records.createdTime.substring(0,10);
         }
     },
 }
@@ -121,7 +107,7 @@ export default {
 .titleHover{
     margin-left: 50%;
     transform: translateX(-50%);
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     margin-bottom: 5px;
 }
 .idInfo{
