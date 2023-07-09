@@ -1,9 +1,9 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-            <el-input style="width: 200px" placeholder="请输入名称" suffix-icon="el-icon-user" v-model="pageInfo.username"></el-input>
-            <el-input style="width: 200px" placeholder="请输入邮箱" suffix-icon="el-icon-message" class="ml" v-model="pageInfo.email"></el-input>
-            <el-button class="ml" type="primary" @click="load">搜索 <i class="el-icon-search"></i></el-button>
+            <el-input style="width: 200px" @input="search" placeholder="请输入名称" suffix-icon="el-icon-user" v-model="pageInfo.username"></el-input>
+            <el-input style="width: 200px" @input="search" placeholder="请输入邮箱" suffix-icon="el-icon-message" class="ml" v-model="pageInfo.email"></el-input>
+            <el-button class="ml" type="primary" @click="search">搜索 <i class="el-icon-search"></i></el-button>
           </div>
 
           <div style="margin: 10px 0">
@@ -18,7 +18,7 @@
               @confirm="delBatch"
           >
             <el-button type="danger" class="ml" slot="reference" :disabled="this.multipleSelection.length == 0  ?  true : false">
-              批量删除 <i class="el-icon-remove-outline"></i></el-button>
+              批量删除用户 <i class="el-icon-remove-outline"></i></el-button>
           </el-popconfirm>
             </div>
 
@@ -52,36 +52,38 @@
                 @current-change="handleCurrentChange"
                 :current-page="pageNum"
                 :page-sizes="[2, 5, 10, 20]"
-                :page-size="pageSize"
+                :page-size="pageInfo.pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="total">
+                :total="total"
+                v-if="pageshow">
             </el-pagination>
           </div>
 
-          <el-dialog title="新增/修改用户信息" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false>
-          <el-form label-width="80px" size="small">
-            <el-form-item label="用户名">
+          <el-dialog title="新增/修改用户信息" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false destroy-on-close>
+          <el-form :model="form" ref="form" :rules="rules" label-width="80px" size="small">
+            <el-form-item label="用户名" prop="userName">
               <el-input v-model="form.userName" autocomplete="off"></el-input>
             </el-form-item>
-            <div style="margin:0 0 10px 0;">
-              <span style="margin-left:38px">性别</span>
-              <el-radio v-model="form.gender" label="M" border style="margin-left:12px;">男</el-radio>
-              <el-radio v-model="form.gender" label="F" border style="margin-left:25px;">女</el-radio>
-              <el-radio v-model="form.gender" label="NULL" border style="margin-left:25px;">其他</el-radio>
-            </div>
-            <el-form-item label="邮箱">
+            <el-form-item label="性别" prop="gender">
+              <el-radio-group v-model="form.gender">
+              <el-radio label="M" border>男</el-radio>
+              <el-radio label="F" border style="margin-left:35px;">女</el-radio>
+              <el-radio label="NULL" border style="margin-left:35px;">其他</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="邮箱" prop="email">
               <el-input v-model="form.email" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密码">
+            <el-form-item label="密码" prop="password">
               <el-input v-model="form.password" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="电话">
+            <el-form-item label="电话" prop="phoneNumber">
               <el-input v-model="form.phoneNumber" autocomplete="off"></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="save">确 定</el-button>
+            <el-button type="primary" @click="submitForm(form)">确 定</el-button>
           </div>
         </el-dialog>
 
@@ -103,28 +105,49 @@ import {DeleteUser} from "@/api/userApis.js";
 export default { 
     name: "User",
   data() {
+    let validateEmail = (rules, value, callback) => {
+          const regEmail = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+          if(this.form.email != '' && !regEmail.test(this.form.email)) {
+            callback(new Error('请输入有效的邮箱')); 
+          }else {
+            callback()
+          }
+        }
     return {
       tableData: [],
       total: 0,
       pageNum: 1,
       pageSize: 5,
-      // userName: "",
-      // email: "",
-      form: {},
       dialogFormVisible: false,
       delDialogFormVisible: false,
       multipleSelection: [],
       delUserId:[],
-      // collapseBtnClass: 'el-icon-s-fold',
       sideWidth: 200,
       logoTextShow: true,
+      pageshow: true,
+      form: {
+        userName: '',
+        gender: '',
+        email: '',
+        password: '',
+        phoneNumber: '',
+      },
+      rules: {
+        userName: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+        gender: [{required: true, message: '请选择性别', trigger: 'change'}],
+        email: [{required: true, message: '请输入邮箱', trigger: 'blur' },
+          { validator: validateEmail, trigger: 'blur'}],
+        password: [{required: true, min: 6, message: '密码长度需大于6', trigger: 'blur' }],
+        phoneNumber: [{required: true, min: 11,max: 11, message: '请输入11位电话号码', trigger: 'blur' }]
+      },
       pageInfo:{
         pageNum: 1,
         pageSize: 5,
         username: "",
         email: "",
       },
-      headerBg: 'headerBg'
+      headerBg: 'headerBg',
+      
     };
   },
   created() {
@@ -132,6 +155,25 @@ export default {
     this.load()
   },
   methods: {
+    search(){
+      this.pageshow = false;
+      this.pageInfo.pageNum=1;
+      this.load()
+      this.$nextTick(() => {
+        this.pageshow = true;
+      });
+
+    },
+    submitForm(form) {
+        this.$refs.form.validate((valid) => {
+          if (valid) {
+            this.save();
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
     load() {  
           getUserInfo(this.pageInfo).then((res) => {
           console.log(res)

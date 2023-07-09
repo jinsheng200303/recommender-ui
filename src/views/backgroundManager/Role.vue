@@ -1,9 +1,9 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-            <el-input style="width: 200px" placeholder="请输入用户名" suffix-icon="el-icon-user" v-model="userInfo.userName"></el-input>
-            <el-input style="width: 200px" placeholder="请输入角色名" suffix-icon="el-icon-s-custom" class="ml" v-model="userInfo.roleName"></el-input>
-            <el-button class="ml" type="primary" @click="load">搜索 <i class="el-icon-search"></i></el-button>
+            <el-input style="width: 200px" @input="search" placeholder="请输入用户名" suffix-icon="el-icon-user" v-model="userInfo.userName"></el-input>
+            <el-input style="width: 200px" @input="search" placeholder="请输入角色名" suffix-icon="el-icon-s-custom" class="ml" v-model="userInfo.roleName"></el-input>
+            <el-button class="ml" type="primary" @click="search">搜索 <i class="el-icon-search"></i></el-button>
           </div>
 
           <div style="margin: 10px 0">
@@ -18,12 +18,13 @@
               @confirm="delBatch"
           >
             <el-button type="danger" class="ml" slot="reference" :disabled="this.multipleSelection.length == 0  ?  true : false">
-              批量删除 <i class="el-icon-remove-outline"></i></el-button>
+              批量删除用户角色 <i class="el-icon-remove-outline"></i></el-button>
           </el-popconfirm>
             </div>
 
           <el-table :data="tableData" border stripe :header-cell-class-name="headerBg" @selection-change="handleSelectionChange">
-            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column type="selection" width="55">
+            </el-table-column>
             <el-table-column prop="personRoleId" label="ID" width="180">
             </el-table-column>
             <el-table-column prop="userId" label="用户ID" width="240">
@@ -48,45 +49,51 @@
                 @current-change="handleCurrentChange"
                 :current-page="pageNum"
                 :page-sizes="[2, 5, 10, 20]"
-                :page-size="pageSize"
+                :page-size="userInfo.pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="total">
+                :total="total"
+                v-if="pageshow">
             </el-pagination>
           </div>
 
-          <el-dialog title="新增用户角色信息" :visible.sync="addDialogFormVisible" width="30%" center :close-on-click-modal=false>
-          <el-form label-width="80px" size="small">
-            <el-form-item label="用户ID">
+          <el-dialog title="新增用户角色信息" :visible.sync="addDialogFormVisible" width="30%" center :close-on-click-modal=false destroy-on-close>
+          <el-form :model="form2" ref="form2" :rules="rules" label-width="80px" size="small">
+            <el-form-item label="用户ID" prop="userId">
               <el-input v-model="form2.userId" autocomplete="off"></el-input>
             </el-form-item>
-            <div style="margin:0 0 10px 0;">
-              <span style="margin-left:10px">选择角色</span>
-              <el-radio v-model="form2.roleId" label="1" border style="margin-left:12px;">学生</el-radio>
-              <el-radio v-model="form2.roleId" label="2" border style="margin-left:4px;">教师</el-radio>
-              <el-radio v-model="form2.roleId" label="3" border style="margin-left:4px;">管理员</el-radio>
-            </div>
+              <el-form-item label="角色" prop="roleId">
+                <el-radio-group v-model="form2.roleId">
+                  <el-radio label="1" border >学生</el-radio>
+                  <el-radio label="2" border style="margin-left:15px;">教师</el-radio>
+                  <el-radio label="3" border style="margin-left:15px;">管理员</el-radio>
+                </el-radio-group>
+              </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="addDialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="add">确 定</el-button>
+            <el-button type="primary" @click="submitForm2(form2)">确 定</el-button>
           </div>
         </el-dialog>
 
-          <el-dialog title="修改用户角色信息" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false>
-          <el-form label-width="80px" size="small">
+          <el-dialog title="修改用户角色信息" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false destroy-on-close>
+          <el-form :model="form" ref="form" :rules="rules" label-width="80px" size="small">
+            <el-form-item label="用户ID">
+              <el-input :disabled="true" v-model="form.userId" autocomplete="off"></el-input>
+            </el-form-item>
             <el-form-item label="用户名">
               <el-input :disabled="true" v-model="form.userName" autocomplete="off"></el-input>
             </el-form-item>
-            <div style="margin:0 0 10px 0;">
-              <span style="margin-left:10px">选择角色</span>
-              <el-radio v-model="form.roleId" label="1" border style="margin-left:12px;">学生</el-radio>
-              <el-radio v-model="form.roleId" label="2" border style="margin-left:4px;">教师</el-radio>
-              <el-radio v-model="form.roleId" label="3" border style="margin-left:4px;">管理员</el-radio>
-            </div>
+            <el-form-item label="角色" prop="roleId">
+                <el-radio-group v-model="form.roleId">
+                  <el-radio label="1" border >学生</el-radio>
+                  <el-radio label="2" border style="margin-left:15px;">教师</el-radio>
+                  <el-radio label="3" border style="margin-left:15px;">管理员</el-radio>
+                </el-radio-group>
+              </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="save">确 定</el-button>
+            <el-button type="primary" @click="submitForm(form)">确 定</el-button>
           </div>
         </el-dialog>
 
@@ -115,8 +122,19 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 5,
-      form: {},
-      form2: {},
+      form: {
+        userId: '',
+        roleId: '',
+      },
+      form2: {
+        userId: '',
+        roleId: '',
+      },
+      rules: {
+        userId: [{required: true, message: '请输入用户ID', trigger: 'blur'}],
+        roleId: [{required: true, message: '请选择角色', trigger: 'change'}],
+      },
+      
       addDialogFormVisible: false,
       dialogFormVisible: false,
       delDialogFormVisible: false,
@@ -124,6 +142,7 @@ export default {
       delUserId:[],
       sideWidth: 200,
       logoTextShow: true,
+      pageshow: true,
       userInfo:{
         pageNum: 1,
         pageSize: 5,
@@ -138,6 +157,35 @@ export default {
     this.load()
   },
   methods: {
+    search(){
+      this.pageshow = false;
+      this.userInfo.pageNum=1;
+      this.load()
+      this.$nextTick(() => {
+        this.pageshow = true;
+      });
+
+    },
+    submitForm2(form2) {
+        this.$refs.form2.validate((valid) => {
+          if (valid) {
+            this.add();
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      submitForm(form) {
+        this.$refs.form.validate((valid) => {
+          if (valid) {
+            this.save();
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
     load() {  
           getUserRoleInfo(this.userInfo).then((res) => {
           console.log(res)
@@ -204,7 +252,7 @@ export default {
     },
       handleAdd() {
       this.addDialogFormVisible = true
-      this.form = {}
+      this.form2 = {}
     },
     handleEdit(row) {
       this.form = Object.assign({},row)

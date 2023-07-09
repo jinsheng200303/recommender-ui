@@ -61,3 +61,21 @@ export function deleteClassStudent(classId,studentId) {
         data:studentId,
     })
 }
+
+// 分页查询课堂及教师信息
+export function getTeacherClassInfo(userClassInfo) {
+        return request({
+            url: '/classes/classInfoQuery',
+            method: 'post',
+            data: userClassInfo
+        })
+    }
+
+    //新增/修改课堂（无图片）
+export function newClass(classInfo) {
+    return request({
+        url: '/classes/addClass',
+        method: 'post',
+        data: classInfo,
+    })
+}
