@@ -6,3 +6,10 @@
 html,body{
     height: 100%;
   }
+
+/* dialog、comfirm遮罩样式修改 */
+.v-modal {
+    opacity: 1;
+    backdrop-filter: blur(10px);
+    background-color: rgb(255, 255, 255,0.1)
+}
