@@ -30,11 +30,16 @@ export function deleteClass(IDS) {
 //     classPicture: "",
 //     createdTime: ""
 // },
-export function addClass(classes) {
+export function addClass(userId,className,classCategoryId,description,classImageFile) {
     return request({
         url: '/classes/save',
         method: 'post',
-        data: classes,
+        params: {
+            userId,
+            className,
+            classCategoryId,
+            classImageFile,
+        }
     })
 }
 
