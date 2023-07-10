@@ -33,6 +33,10 @@
         <i class="el-icon-user"></i>
         <span slot="title">角色管理</span>
       </el-menu-item>
+      <el-menu-item index="/ManagePage/permissionAssignment">
+        <i class="el-icon-s-help"></i>
+        <span slot="title">权限分配</span>
+      </el-menu-item>
     </el-submenu>
     <el-menu-item index="/ManagePage/Class">
       <template slot="title">

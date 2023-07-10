@@ -59,7 +59,7 @@
             </el-pagination>
           </div>
 
-          <el-dialog title="新增/修改用户信息" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false destroy-on-close>
+          <el-dialog :title="form.userId==null?'新增用户信息':'修改用户信息'" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false destroy-on-close>
           <el-form :model="form" ref="form" :rules="rules" label-width="80px" size="small">
             <el-form-item label="用户名" prop="userName">
               <el-input v-model="form.userName" autocomplete="off"></el-input>
@@ -134,7 +134,7 @@ export default {
       },
       rules: {
         userName: [{required: true, message: '请输入用户名', trigger: 'blur'}],
-        gender: [{required: true, message: '请选择性别', trigger: 'change'}],
+        gender: [{required: true, message: '请选择性别', trigger: 'blur'}],
         email: [{required: true, message: '请输入邮箱', trigger: 'blur' },
           { validator: validateEmail, trigger: 'blur'}],
         password: [{required: true, min: 6, message: '密码长度需大于6', trigger: 'blur' }],
