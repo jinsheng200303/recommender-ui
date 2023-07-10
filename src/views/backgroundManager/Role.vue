@@ -29,9 +29,9 @@
             </el-table-column>
             <el-table-column prop="userId" label="用户ID" width="240">
             </el-table-column>
-            <el-table-column prop="userName" label="用户名" width="240">
+            <el-table-column prop="userName" label="用户名">
             </el-table-column>
-            <el-table-column prop="roleName" label="用户角色" width="260">
+            <el-table-column prop="roleName" label="用户角色">
             </el-table-column>
             <el-table-column label="操作"  width="300" align="center">
               <template slot-scope="scope">
@@ -132,7 +132,7 @@ export default {
       },
       rules: {
         userId: [{required: true, message: '请输入用户ID', trigger: 'blur'}],
-        roleId: [{required: true, message: '请选择角色', trigger: 'change'}],
+        roleId: [{required: true, message: '请选择角色', trigger: 'blur'}],
       },
       
       addDialogFormVisible: false,

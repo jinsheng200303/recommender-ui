@@ -59,7 +59,7 @@
             </el-pagination>
           </div>
 
-          <el-dialog title="新增/修改课堂信息" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false destroy-on-close>
+          <el-dialog :title="form.classId==null?'新增课堂信息':'修改课堂信息'" :visible.sync="dialogFormVisible" width="30%" center :close-on-click-modal=false destroy-on-close>
           <el-form :model="form" ref="form" :rules="rules" label-width="80px" size="small">
             <el-form-item label="课堂名" prop="className">
               <el-input v-model="form.className" autocomplete="off"></el-input>
@@ -136,6 +136,7 @@ export default {
       logoTextShow: true,
       pageshow: true,
       form: {
+        classId: '',
         className: '',
         classCategoryId: '',
         createUserId: '',

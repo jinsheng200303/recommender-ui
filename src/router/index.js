@@ -29,6 +29,11 @@ const router = new VueRouter({
           component: () => import('@/views/backgroundManager/Role.vue')
         },
         {
+          path: 'permissionAssignment',
+          name: '系统管理 / 权限分配',
+          component: () => import('@/views/backgroundManager/permissionAssignment.vue')
+        },
+        {
           path: 'Class',
           name: '课堂管理',
           component: () => import('@/views/backgroundManager/Class.vue')
