@@ -84,6 +84,11 @@ const router = new VueRouter({
           name: 'announcement',
           component: () => import('@/views/user/announcement.vue'),
         },
+        {
+          path: '/classinfo/classexam',
+          name: 'classexam',
+          component: () => import('@/views/user/classexam.vue'),
+        },
       ]
     },
     {

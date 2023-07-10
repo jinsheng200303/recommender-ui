@@ -46,6 +46,11 @@
                         url: '/classinfo/student',
                         name: '学 员',
                     },
+                    {
+                        key: 3,
+                        url: '/classinfo/classexam',
+                        name: '考 试',
+                    },
                 ],
                 //上一个窗口传递参数接收
                 // classInfo:{
@@ -121,5 +126,7 @@
     height: 84vh;
     background-color: rgb(250, 250, 250);
 }
-
+.el-main{
+    padding: 0;
+}
 </style>
