@@ -8,7 +8,7 @@
             <div class="class-card-info" :class="{infoHover:isHover}">
                 <div class="title" :class="{titleHover:isHover}">{{ records.className }}</div>
                 <div class="idInfo" :class="{idInfoHover:isHover}">课堂id:&nbsp;&nbsp;{{ records.classId }}</div>
-                <div class="description" :class="{descriptionHover:isHover}">&nbsp;&nbsp;&nbsp;&nbsp;创建时间:&nbsp;&nbsp;{{ formatInfo }}</div>
+                <div class="description" :class="{descriptionHover:isHover}">&nbsp;&nbsp;&nbsp;&nbsp;{{ formatInfo }}</div>
             </div>
         </div>
     </div>
@@ -43,10 +43,14 @@ export default {
     },
     computed: {
         formatInfo(){
-            if (this.records.createdTime.length > 70) {
-              return this.records.createdTime.slice(0, 70) + '...';
+            if(this.records.description != null){
+                if (this.records.description.length > 78) {
+                    return this.records.description.slice(0, 78) + '...';
+                }else {
+                    return this.records.description;
+                }
             }else {
-              return this.records.createdTime;
+                return this.records.description;
             }
         }
     },
