@@ -10,10 +10,10 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="课堂图片:" prop="classPicture">
-                <!-- <input type="file" @change="onchangemd"> -->
+            <!-- <el-form-item label="课堂图片:" prop="classPicture">
+                <input type="file" @change="onchangemd">
                 <el-input type="file" v-model="classes.classPicture"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="课堂简介:" prop="description">
               <el-input 
                     v-model="classes.description" 
@@ -68,6 +68,7 @@
                 classPicture: "",
                 description: "",
                 classCategoryId: "",
+                createUserId: 0,
             },
             dialogFormVisible: false,
             isLoading: false,
@@ -100,8 +101,8 @@
           this.$refs[formName].validate((valid) => {
             if (valid) {
                 this.isLoading = true;
-                let userId = JSON.parse(localStorage.getItem("userInfo")).userId;
-                addClass(userId,this.classes.className,this.classes.classCategoryId,this.classes.description,this.classes.classPicture)
+                this.classes.createUserId = JSON.parse(localStorage.getItem("userInfo")).userId;
+                addClass(this.classes)
                 .then((res) => {
                     if (res.code == 200) {
                         this.dialogFormVisible=false;
