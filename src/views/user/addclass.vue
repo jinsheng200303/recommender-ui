@@ -132,8 +132,8 @@
     }
   </script>
 
-<style>
-.el-dialog{
-  border-radius: 15px;
+<style scoped>
+.el-dialog__wrapper /deep/ .el-dialog{
+    border-radius: 15px;
 }
 </style>

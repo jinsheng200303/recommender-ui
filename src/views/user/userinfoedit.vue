@@ -1,5 +1,7 @@
 <template>
-    <el-dialog title="编辑个人信息" 
+    <el-dialog 
+        class="dialog"
+        title="编辑个人信息" 
         :visible.sync="dialogFormVisible" 
         width="500px" 
         :destroy-on-close="true"
@@ -112,8 +114,8 @@
     }
   </script>
 
-<style>
-.el-dialog{
+<style scoped>
+.dialog /deep/ .el-dialog{
     border-radius: 15px;
 }
 .el-form{

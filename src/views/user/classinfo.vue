@@ -16,7 +16,7 @@
                             v-for="item in asideNavData"
                             :key="item.key"
                             :index="item.url">
-                            <i class="el-icon-menu"></i>
+                            <i class="el-icon-s-custom"></i>
                             <span slot="title">{{ item.name }}</span>
                         </el-menu-item>
                     </el-menu>
@@ -72,11 +72,9 @@
                 sessionStorage.setItem("classInfoPath",key);
             },
             showAside(){
-                console.log("show")
                 this.isCollapse = false;
             },
             noShowAside(){
-                console.log("noShow")
                 this.isCollapse = true;
             },
         },
@@ -94,6 +92,8 @@
 <style scoped>
 .el-container{
     position: relative;
+    background-color: rgb(205, 200, 182);
+
 }
 .asideArea{
     position: absolute;
@@ -110,14 +110,52 @@
 .asideMenu{
     text-align: center;
     height: 100%;
-    background-color: rgb(255,255,255,0.4);  
+    background-color: rgba(255, 255, 255, 0.4);  
     backdrop-filter: blur(40px); 
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0;
+}
+.asideMenu:hover{
+    animation: radiusTransform 0.2s ease normal forwards;
+}
+.asideMenu:not(:hover){
+    animation: radiusTransform 0.2s ease reverse forwards;
+}
+@keyframes radiusTransform {
+    from{
+        border-radius: 0;
+    }
+    10%{
+        border-radius: 0 16px 16px 0;
+    }
+    20%{
+        border-radius: 0 20px 20px 0;
+    }
+    50%{
+        border-radius: 0 25px 25px 0;
+    }
+    to{
+        border-radius: 0 30px 30px 0;
+    }
 }
 .asideMenu:not(.el-menu--collapse) {
     width: 100%;
 }
+.el-menu-item {
+    border-radius: 35px;
+    overflow: hidden;
+    margin-bottom: 60px;
+}
+.el-menu-item:hover {
+    transition: 0.6s;
+    background: rgb(211, 208, 208);
+}
 .el-main{
     padding: 0;
     padding-left: 64px;
+    box-sizing: border-box;
 }
 </style>
