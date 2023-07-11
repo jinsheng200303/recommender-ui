@@ -129,10 +129,11 @@ export default {
     margin: 10px 20px;
 }
 .infinite-list{
-    height: calc(84vh - 60px);
+    height: calc(100vh - 60px);
     list-style: none;
     padding: 30px;
     box-sizing: border-box;
+    background-color: rgb(238, 231, 197);
 }
 .infinite-list-item{
     margin-bottom: 30px;

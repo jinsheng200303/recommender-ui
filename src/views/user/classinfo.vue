@@ -1,14 +1,13 @@
 <template>
     <div>
-        <el-container direction="vertical">
-            <div class="header">
-                <div class="title"> {{ classInfo.className }} </div>
-                <div class="info idInfo"> {{ classInfo.classId }} </div>
-                <div class="info timeInfo"> {{ time.substring(0,10) }}  </div>
-            </div>
-            <el-container>
-                <el-aside width="15%">
+        <el-container>
+            <div
+            class="asideArea"
+            @mouseover="showAside"
+            @mouseleave="noShowAside">
+                <el-aside>
                     <el-menu
+                        :collapse="isCollapse"    
                         class="asideMenu"
                         :router="true"
                         @select="handleSelect"
@@ -17,15 +16,16 @@
                             v-for="item in asideNavData"
                             :key="item.key"
                             :index="item.url">
+                            <i class="el-icon-menu"></i>
                             <span slot="title">{{ item.name }}</span>
                         </el-menu-item>
                     </el-menu>
                 </el-aside>
-                <el-main>
-                    <router-view></router-view>
-                </el-main>
-            </el-container> 
-        </el-container>
+            </div>
+            <el-main>
+                <router-view></router-view>
+            </el-main>
+        </el-container> 
     </div>
 </template>
 
@@ -60,17 +60,24 @@
                 //     classPicture: "",
                 // },
                 classInfo: {},
-                time: "",
                 activeClassInfoPath: '',
+                isCollapse: true,
             }
         },
         mounted() {
             this.classInfo = JSON.parse(window.sessionStorage.getItem("classInfo"));
-            this.time = this.classInfo.createdTime;
         },
         methods: {
             handleSelect(key, keyPath) {
                 sessionStorage.setItem("classInfoPath",key);
+            },
+            showAside(){
+                console.log("show")
+                this.isCollapse = false;
+            },
+            noShowAside(){
+                console.log("noShow")
+                this.isCollapse = true;
             },
         },
         created() {
@@ -85,48 +92,32 @@
 </script>
 
 <style scoped>
-.header{
-    width: 100vw;
-    height: 16vh;
+.el-container{
     position: relative;
-    background-color: #D3DCE6;
 }
-.title{
-    font-size: 35px;
-    font-weight: 500;
-    left: 20%;
+.asideArea{
     position: absolute;
-    top: 10px;
-}
-.info{
-    font-size: 20px;
-    font-weight: 400;
-}
-.idInfo{
-    left: 20%;
-    bottom: 10px;
-    float: left;
-    position: absolute;
-}
-.timeInfo{
-    right: 20%;
-    bottom: 10px;
-    float: right;
-    position: absolute;
+    z-index: 200;
+    height: 100vh;
 }
 .el-aside{
-    min-width: 125px;
-    max-width: 250px;
+    width: 200px !important;
+    height: 100%;
 }
 .el-aside::-webkit-scrollbar{
     display: none;
 }
 .asideMenu{
     text-align: center;
-    height: 84vh;
-    background-color: rgb(250, 250, 250);
+    height: 100%;
+    background-color: rgb(255,255,255,0.4);  
+    backdrop-filter: blur(40px); 
+}
+.asideMenu:not(.el-menu--collapse) {
+    width: 100%;
 }
 .el-main{
     padding: 0;
+    padding-left: 64px;
 }
 </style>
