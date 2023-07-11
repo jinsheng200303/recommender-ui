@@ -5,7 +5,7 @@
         <el-input v-model="temInfo.examTitle"></el-input>
       </el-form-item>
       <el-form-item label="考试时间:" prop="timeRange">
-        <el-date-picker v-model="temInfo.timeRange" type="datetimerange" range-separator="至" start-placeholder="开始时间"
+        <el-date-picker v-model="temInfo.timeRange" type="datetimerange" value-format="yyyy-MM-dd HH:mm:ss" range-separator="至" start-placeholder="开始时间"
           end-placeholder="结束时间" style="width: 100%;">
         </el-date-picker>
       </el-form-item>
@@ -22,7 +22,6 @@ import { updateExam } from '@/api/examApis.js'
 export default {
   data() {
     var validateExamTitle = (rule, value, callback) => {
-      console.log(value)
       if (!value) {
         return callback(new Error('考试名不能为空'));
       } else {
@@ -30,7 +29,6 @@ export default {
       }
     };
     var validateTimeRange = (rule, value, callback) => {
-      console.log(value[0])
       if (!value) {
         return callback(new Error('考试时间不能为空'));
       } else {
@@ -78,7 +76,7 @@ export default {
             if(res.code == 200){
               this.dialogVisible();
               this.$message.success(res.msg);
-              this.$emit("editRefresh",JSON.parse(JSON.stringify(this.examInfo)));
+              this.$emit("editRefresh",this.examInfo);
             }else {
               this.$message.error(res.msg);
             }
@@ -89,14 +87,12 @@ export default {
     },
     dialogVisible() {
       this.dialogFormVisible = !this.dialogFormVisible;
-      console.log("visible")
     },
     updateExamInfo(examInfo) {
       this.examInfo = examInfo;
       this.temInfo.examTitle = examInfo.examTitle;
       this.temInfo.timeRange[0] = examInfo.startTime;
       this.temInfo.timeRange[1] = examInfo.endTime;
-      console.log("update")
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -105,8 +101,8 @@ export default {
 }
 </script>
 
-<style>
-.el-dialog {
-  border-radius: 15px;
+<style scoped>
+.el-dialog__wrapper /deep/ .el-dialog{
+    border-radius: 15px;
 }
 </style>

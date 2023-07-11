@@ -12,27 +12,30 @@
                 <el-button type="primary" size="small" class="search-button" @click="nameSearch(input)">搜 索</el-button>
             </div>
             <div class="el-header-right">
-                <el-button type="primary" size="small" @click="addtest"><i class="el-icon-plus"></i>添加</el-button>
+                <el-button type="primary" size="small" @click="addExam"><i class="el-icon-plus"></i>添加</el-button>
             </div>
         </el-header>
         <ul 
         class="infinite-list" 
         v-infinite-scroll="load"
         style="overflow:auto">
-            <li v-for="exam in classExamsData" class="infinite-list-item">
-                <examcard @deleteRefresh="deleteRefresh" :examInfo="exam"></examcard>
+            <li v-for="(exam,index) in classExamsData" class="infinite-list-item">
+                <examcard @deleteRefresh="deleteRefresh" @cardRefresh="cardRefresh" :item="exam" :index="index"></examcard>
             </li>
             <p class="infinite-footer">{{ footerTip }}</p>
         </ul>
+        <addExam ref="addExam" @addRefresh="addRefresh"></addExam>
     </el-container>
 </template>
 
 <script>
 import examcard from './examcard.vue'
 import { getExamsPage } from "@/api/examApis.js";
+import addExam from './addexam.vue';
 export default {
     components:{
         examcard,
+        addExam,
     },
     data() {
         return {
@@ -44,7 +47,7 @@ export default {
                 classId: 0,
                 examTitle: "",
                 pageNum: 0,
-                pageSize: 1,
+                pageSize: 2,
             }
         }
     },
@@ -52,8 +55,10 @@ export default {
         nameSearch(input){
 
         },
-        addtest(){
-
+        addExam(){
+            this.$nextTick(() => {
+                this.$refs.addExam.dialogVisible();
+            })
         },
         load(){
             if(!this.noMore){
@@ -68,6 +73,12 @@ export default {
                     return;
                 }
             })
+        },
+        cardRefresh(temInfo,index){
+            this.classExamsData[index] = temInfo;
+        },
+        addRefresh(newExam){
+            this.classExamsData.unshift(newExam);
         },
         getExamsData(){
             this.examsQuery.pageNum++;
@@ -133,7 +144,6 @@ export default {
     list-style: none;
     padding: 30px;
     box-sizing: border-box;
-    background-color: rgb(238, 231, 197);
 }
 .infinite-list-item{
     margin-bottom: 30px;

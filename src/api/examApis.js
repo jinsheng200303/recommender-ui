@@ -37,3 +37,12 @@ export function updateExam(exams) {
         data: exams,
     })
 }
+
+//exams 自动生成试卷
+export function autoGenerateExam(generatePapersQuery) {
+    return request({
+        url: '/papers/autoTakePaper',
+        method: 'post',
+        data: generatePapersQuery,
+    })
+}

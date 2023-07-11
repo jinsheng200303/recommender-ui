@@ -27,9 +27,10 @@ export default {
     components: {
         classexamedit,
     },
-    props: ["examInfo"],
+    props: ["index","item"],
     data() {
         return {
+            examInfo: this.item,
             // testInfo:{
             //     status: 1,
             //     examId: 0,
@@ -45,7 +46,7 @@ export default {
     methods: {
         startExam(){
             let roleId = JSON.parse(localStorage.getItem("userInfo")).roleId;
-            if(roleId == 1 && this.examInfo.status == 1){
+            if(roleId == 1){
                 this.$message.success("成功选择");
             }
         },
@@ -57,8 +58,10 @@ export default {
                 this.$refs.classexamedit.updateExamInfo(JSON.parse(JSON.stringify(this.examInfo)));
             })
         },
-        editRefresh(examInfo){
-            this.examInfo = examInfo;
+        editRefresh(temInfo){
+            console.log(this.index);
+            this.$emit("cardRefresh",temInfo,this.index)
+            this.examInfo = temInfo;
         },
         handleDelete(){
             this.$confirm("此操作将永久删除, 是否继续?", "提示", {
@@ -81,6 +84,11 @@ export default {
             })
         },
     },
+    watch: {
+        item(newVal,oldVal){
+            this.examInfo = newVal;
+        }
+    }
 }
 </script>
 
