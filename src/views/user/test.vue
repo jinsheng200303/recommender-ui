@@ -55,8 +55,8 @@ export default {
             //初始化分页基础数据
             init: {
                 pageNum: 0,
-                pageSize: 1,
-                newDataLength: 1,
+                pageSize: 10,
+                newDataLength: 10,
             },
             //侧边导航栏题库数据
             asideNavData: [
@@ -126,6 +126,8 @@ export default {
                 this.questionQuery.questionStatement = "";
                 this.input = "";
                 this.questionData.length = 0;
+                this.isLoading = false;
+                this.noMore = false;
                 this.load();
             }
         },
