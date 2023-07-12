@@ -1,8 +1,9 @@
 <template>
     <div>
         <classexamedit ref="classexamedit" @editRefresh="editRefresh"></classexamedit>
-        <div class="exam-card" @click="startExam">
-            <div class="info">
+        <div class="exam-card" @click="startExam" :style="{height: `${boxHeight}px`}">
+            <div class="info"
+            ref="examCardInfo">
                 <div class="title">
                     <div style="font-size: 1.5rem;">{{ examInfo.examTitle }}</div>
                     <div style="color: rgb(147, 218, 40);">{{ examInfo.totalMarks }}</div>
@@ -31,6 +32,7 @@ export default {
     data() {
         return {
             examInfo: this.item,
+            boxHeight: 0,
             // testInfo:{
             //     status: 1,
             //     examId: 0,
@@ -88,14 +90,17 @@ export default {
         item(newVal,oldVal){
             this.examInfo = newVal;
         }
-    }
+    },
+    mounted() {
+        this.boxHeight = this.$refs.examCardInfo.offsetHeight + 40;
+    },
 }
 </script>
 
 <style scoped>
 .exam-card {
     width: 100%;
-    padding: 30px;
+    padding: 20px;
     box-sizing: border-box;
     border-radius: 10px;
     box-shadow: 1px 1px 10px -2px rgba(0, 0, 0, .2);
