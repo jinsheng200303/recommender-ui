@@ -134,13 +134,13 @@
         border-radius: 0;
     }
     10%{
-        border-radius: 0 16px 16px 0;
+        border-radius: 0 4px 4px 0;
     }
     20%{
-        border-radius: 0 20px 20px 0;
+        border-radius: 0 10px 10px 0;
     }
     50%{
-        border-radius: 0 25px 25px 0;
+        border-radius: 0 20px 20px 0;
     }
     to{
         border-radius: 0 30px 30px 0;
@@ -151,13 +151,13 @@
         border-radius: 0 30px 30px 0;
     }
     50%{
-        border-radius: 0 25px 25px 0;
-    }
-    80%{
         border-radius: 0 20px 20px 0;
     }
+    80%{
+        border-radius: 0 10px 10px 0;
+    }
     90%{
-        border-radius: 0 16px 16px 0;
+        border-radius: 0 4px 4px 0;
     }
     to{
         border-radius: 0;
