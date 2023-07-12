@@ -44,6 +44,18 @@
         <span slot="title">课堂管理</span>
       </template>
     </el-menu-item>
+    <el-menu-item index="/ManagePage/Question">
+      <template slot="title">
+        <i class="el-icon-tickets"></i>
+        <span slot="title">试题管理</span>
+      </template>
+    </el-menu-item>
+    <el-menu-item index="/ManagePage/PersonInfo">
+      <template slot="title">
+        <i class="el-icon-star-off"></i>
+        <span slot="title">个人信息</span>
+      </template>
+    </el-menu-item>
   </el-menu>
 </template>
 

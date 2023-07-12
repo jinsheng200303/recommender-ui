@@ -48,12 +48,12 @@
       </el-col>
     </el-row>
 
-    <el-row>
+    <el-row style="margin-top:20px;">
       <el-col :span="12">
-        <div id="left" style="width: 500px; height: 400px"></div>
+        <div id="left" style="width: 500px; height: 500px"></div>
       </el-col>
       <el-col :span="12">
-        <div id="right" style="width: 500px; height: 400px"></div>
+        <div id="right" style="width: 500px; height: 500px"></div>
       </el-col>
     </el-row>
   </div>
@@ -66,7 +66,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import {getEchartsUsersGender} from "@/api/userEchartsApis.js";
+import {getEchartsUsersAge} from "@/api/userEchartsApis.js";
 import {getEchartsUsersPolitics} from "@/api/userEchartsApis.js";
 import {getUsersRole} from "@/api/userEchartsApis.js";
 import {getAllUser} from "@/api/userApis.js";
@@ -107,50 +107,61 @@ export default {
     var cookieOption;
     cookieOption = {  //空心饼图
       title: {
-        text: '用户性别统计图',
+        text: '用户年龄统计图',
         left: 'center'
       },
       tooltip: {
         trigger: 'item'
       },
       legend: {
-        top: '8%',
+        top: '10%',
         left: 'center'
       },
       series: [
         {
-          name: 'Access From',
+          // name: 'Access From',
+          // type: 'pie',
+          // radius: ['40%', '70%'],
+          // avoidLabelOverlap: false,
+          // itemStyle: {
+          //   borderRadius: 10,
+          //   borderColor: '#fff',
+          //   borderWidth: 2
+          // },
+          // label: {
+          //   show: false,
+          //   position: 'center'
+          // },
+          // emphasis: {
+          //   label: {
+          //     show: true,
+          //     fontSize: 40,
+          //     fontWeight: 'bold'
+          //   }
+          // },
+          // labelLine: {
+          //   show: false
+          // },
+          name: '用户年龄分布概况',
           type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
+          radius: [20, 140],
+          center: ['50%', '60%'],
+          roseType: 'area',
           itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
-          },
-          label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 40,
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
+            borderRadius: 5
           },
           data: [],
         }
       ]
     };
-    getEchartsUsersGender().then((res) => {
+    getEchartsUsersAge().then((res) => {
       cookieOption.series[0].data=[
-        {name: "男", value: res.data[0]},
-        {name: "女", value: res.data[1]},
-        {name: "其他", value: res.data[2]},
+        {name: "0-18岁", value: res.data[0]},
+        {name: "19-22岁", value: res.data[1]},
+        {name: "23-35岁", value: res.data[2]},
+        {name: "36-60岁", value: res.data[3]},
+        {name: "61+岁", value: res.data[4]},
+        {name: "<0岁", value: res.data[5]},
       ]
       cookieOption && myChart.setOption(cookieOption);
     })
