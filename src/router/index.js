@@ -130,6 +130,8 @@ router.beforeEach((to, from, next) => {
   store.commit("setPath") // 触发store的数据更新
   if (to.path.startsWith('/login')) {
     window.localStorage.removeItem('token')
+    window.localStorage.clear();
+    sessionStorage.clear();
     next()
   } else {
     let user = window.localStorage.getItem('token')
