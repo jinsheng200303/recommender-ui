@@ -43,6 +43,11 @@ const router = new VueRouter({
           name: '试题管理',
           component: () => import('@/views/backgroundManager/Question.vue')
         },
+        {
+          path: 'PersonInfo',
+          name: '个人信息',
+          component: () => import('@/views/backgroundManager/PersonInfo.vue')
+        },
       ]
     },
     {
