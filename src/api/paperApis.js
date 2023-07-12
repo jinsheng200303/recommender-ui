@@ -43,3 +43,14 @@ export function getPaperQuestion(paperId){
         method: 'get',
     })
 }
+
+//根据课堂ID查找试卷ID及其标题
+export function getPaperOptionByClassId(classId){
+    return request ({
+        url: '/papers/getByClassId',
+        method: 'get',
+        params: {
+            classId,
+        }
+    })
+}

@@ -9,6 +9,16 @@
           end-placeholder="结束时间" style="width: 100%;">
         </el-date-picker>
       </el-form-item>
+      <el-form-item label="选择试卷:" prop="timeRange">
+        <el-select v-model="temInfo.paperId" filterable placeholder="请选择试卷">
+          <el-option
+            v-for="item in options"
+            :key="item.paperId"
+            :label="item.paperTitle"
+            :value="item.paperId">
+          </el-option>
+        </el-select>
+      </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogVisible();resetForm('temInfo')">取 消</el-button>
@@ -18,6 +28,7 @@
 </template>
 
 <script>
+import { getPaperOptionByClassId } from '@/api/paperApis.js'
 import { updateExam } from '@/api/examApis.js'
 export default {
   data() {
@@ -50,6 +61,7 @@ export default {
       temInfo:{
         examTitle: "",
         timeRange: [],
+        paperId: '',
       },
       dialogFormVisible: false,
       isLoading: false,
@@ -61,6 +73,7 @@ export default {
           { validator: validateTimeRange, trigger: 'blur' }
         ],
       },
+      options: [],
     };
   },
   methods: {
@@ -71,6 +84,7 @@ export default {
           this.examInfo.examTitle = this.temInfo.examTitle;
           this.examInfo.startTime = this.temInfo.timeRange[0];
           this.examInfo.endTime = this.temInfo.timeRange[1];
+          this.examInfo.paperId = this.temInfo.paperId;
           updateExam(this.examInfo)
           .then((res) => {
             if(res.code == 200){
@@ -93,16 +107,31 @@ export default {
       this.temInfo.examTitle = examInfo.examTitle;
       this.temInfo.timeRange[0] = examInfo.startTime;
       this.temInfo.timeRange[1] = examInfo.endTime;
+      this.temInfo.paperId = examInfo.paperId;
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-  }
+  },
+  mounted() {
+    getPaperOptionByClassId(JSON.parse(window.sessionStorage.getItem("classInfo")).classId)
+    .then((res) => {
+      if(res.code == 200){
+        this.options.push(...res.data)
+      }
+    })
+  },
 }
 </script>
 
 <style scoped>
 .el-dialog__wrapper /deep/ .el-dialog{
     border-radius: 15px;
+}
+.el-form{
+  margin-right: 15px;
+}
+.el-select{
+  width: 100%;
 }
 </style>
