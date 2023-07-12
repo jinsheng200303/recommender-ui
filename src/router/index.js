@@ -38,6 +38,11 @@ const router = new VueRouter({
           name: '课堂管理',
           component: () => import('@/views/backgroundManager/Class.vue')
         },
+        {
+          path: 'Question',
+          name: '试题管理',
+          component: () => import('@/views/backgroundManager/Question.vue')
+        },
       ]
     },
     {

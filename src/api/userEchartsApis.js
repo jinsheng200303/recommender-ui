@@ -9,9 +9,9 @@ export function getEchartsUsersPolitics() {
     }
     
     // 统计不同性别的人数(空心饼图)
-    export function getEchartsUsersGender() {
+    export function getEchartsUsersAge() {
         return request({
-            url: '/echarts/gender',
+            url: '/echarts/age',
             method: 'get',
         })
     }
