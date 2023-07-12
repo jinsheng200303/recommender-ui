@@ -94,7 +94,17 @@ const router = new VueRouter({
           name: 'classexam',
           component: () => import('@/views/user/classexam.vue'),
         },
+        {
+          path: '/classinfo/classpaper',
+          name: 'classpaper',
+          component: () => import('@/views/user/classpaper.vue'),
+        },
       ]
+    },
+    {
+      path: '/addpaper',
+      name: 'addpaper',
+      component: () => import('@/views/user/addpaper.vue'),
     },
     {
       path: '/myGraph',

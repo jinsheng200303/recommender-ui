@@ -51,6 +51,11 @@
                         url: '/classinfo/classexam',
                         name: '考 试',
                     },
+                    {
+                        key: 4,
+                        url: '/classinfo/classpaper',
+                        name: '试 卷',
+                    },
                 ],
                 //上一个窗口传递参数接收
                 // classInfo:{
@@ -110,7 +115,7 @@
 .asideMenu{
     text-align: center;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.4);  
+    background-color: rgba(255, 255, 255, 0.5);  
     backdrop-filter: blur(40px); 
     overflow: hidden;
     display: flex;
@@ -119,10 +124,10 @@
     border-radius: 0;
 }
 .asideMenu:hover{
-    animation: radiusTransform 0.2s ease normal forwards;
+    animation: radiusTransform 0.3s ease normal forwards;
 }
 .asideMenu:not(:hover){
-    animation: radiusTransform 0.2s ease reverse forwards;
+    animation: oppRadiusTransform 0.3s ease normal forwards;
 }
 @keyframes radiusTransform {
     from{
@@ -139,6 +144,23 @@
     }
     to{
         border-radius: 0 30px 30px 0;
+    }
+}
+@keyframes oppRadiusTransform{
+    from{
+        border-radius: 0 30px 30px 0;
+    }
+    50%{
+        border-radius: 0 25px 25px 0;
+    }
+    80%{
+        border-radius: 0 20px 20px 0;
+    }
+    90%{
+        border-radius: 0 16px 16px 0;
+    }
+    to{
+        border-radius: 0;
     }
 }
 .asideMenu:not(.el-menu--collapse) {
