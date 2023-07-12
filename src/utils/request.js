@@ -1,4 +1,6 @@
 import axios from 'axios'
+import ElementUI from 'element-ui'
+import router from '../router'
 
 const request = axios.create({
     baseURL: '/proxy',
@@ -40,11 +42,12 @@ request.interceptors.response.use(
             res = res ? JSON.parse(res) : res
         }
         // 当权限验证不通过的时候给出提示
-        if (res.code === '401') {
+        if (res.code == '401') {
             ElementUI.Message({
                 message: res.msg,
                 type: 'error'
             });
+            router.push('/login')
         }
         return res;
         
