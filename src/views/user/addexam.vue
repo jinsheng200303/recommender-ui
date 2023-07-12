@@ -35,7 +35,9 @@
         var validateTimeRange = (rule, value, callback) => {
           if (!value) {
             return callback(new Error('考试时间不能为空'));
-          } else {
+          }else if(value[0] == value[1]) {
+            return callback(new Error('开考和结束时间不能相同'));
+          }else {
             callback();
           }
         };
