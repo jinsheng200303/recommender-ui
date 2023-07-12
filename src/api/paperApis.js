@@ -54,3 +54,12 @@ export function getPaperOptionByClassId(classId){
         }
     })
 }
+
+//自动生成试卷
+export function autoGeneratePaper(generatePapersQuery){
+    return request ({
+        url: '/papers/autoTakePaper',
+        method: 'post',
+        data: generatePapersQuery,
+    })
+}
