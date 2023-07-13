@@ -43,6 +43,10 @@
                             <i class="el-icon-s-data"></i>
                             <span slot="title">统 计</span>
                         </el-menu-item>
+                        <el-menu-item index="/classinfo/classGraph">
+                            <i class="el-icon-share"></i>
+                            <span slot="title">图 谱</span>
+                        </el-menu-item>
                     </el-menu>
                 </el-aside>
             </div>

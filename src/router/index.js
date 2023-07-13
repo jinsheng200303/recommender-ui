@@ -119,6 +119,11 @@ const router = new VueRouter({
           name: 'classStatics',
           component: () => import('@/views/user/classStatics.vue'),
         },
+        {
+          path: '/classinfo/classGraph',
+          name: 'classGraph',
+          component: () => import('@/views/user/classGraph.vue'),
+        },
       ]
     },
     {
