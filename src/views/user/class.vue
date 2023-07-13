@@ -32,6 +32,7 @@ import classcard from './classcard.vue'
 import addClass from './addclass.vue'
 import joinclass from './joinclass.vue'
 import { getClassByuserId } from '@/api/userApis.js'
+import { getClassByCreateUserId } from '@/api/classApis.js'
 export default {
     components:{
         classcard,
@@ -75,16 +76,25 @@ export default {
         },
         //获取新的课堂数据
         getClass() {
-            // this.pageInfo.pageNum++;
+            let roleId = JSON.parse(localStorage.getItem("userInfo")).roleId;
             let userId = JSON.parse(localStorage.getItem("userInfo")).userId;
-            getClassByuserId(userId)
-            .then((res) => {
-                this.classData.push(...res.data);
-                // if(res.data.records.length < this.pageInfo.pageSize){
-                //     this.noMore = true
-                // }
-                // this.loading = false
-          });
+            if(roleId == 1)
+            {
+                // this.pageInfo.pageNum++;
+                getClassByuserId(userId)
+                .then((res) => {
+                    this.classData.push(...res.data);
+                    // if(res.data.records.length < this.pageInfo.pageSize){
+                    //     this.noMore = true
+                    // }
+                    // this.loading = false
+                });
+            }else if(roleId == 2){
+                getClassByCreateUserId(userId)
+                .then((res) => {
+                    this.classData.push(...res.data);
+                })
+            }
         },
         //删除按钮显示
         showButton(){

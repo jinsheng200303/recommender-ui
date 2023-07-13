@@ -43,6 +43,7 @@ export default {
             //     endTime: "2011-09-05 14:23:10",
             //     classId: 1,
             // },
+            isTeacher: false,
         }
     },
     methods: {

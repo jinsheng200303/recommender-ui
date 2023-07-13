@@ -12,7 +12,7 @@
                 <el-button type="primary" size="small" class="search-button" @click="nameSearch(input)">搜 索</el-button>
             </div>
             <div class="el-header-right">
-                <el-button type="primary" size="small" @click="addExam"><i class="el-icon-plus"></i>添加</el-button>
+                <el-button type="primary" size="small" @click="addExam" v-if="isTeacher"><i class="el-icon-plus"></i>添加</el-button>
             </div>
         </el-header>
         <ul 
@@ -48,7 +48,8 @@ export default {
                 examTitle: "",
                 pageNum: 0,
                 pageSize: 2,
-            }
+            },
+            isTeacher: false,
         }
     },
     methods: {
@@ -107,6 +108,10 @@ export default {
     },
     created() {
         this.examsQuery.classId = JSON.parse(window.sessionStorage.getItem("classInfo")).classId;
+        if(JSON.parse(localStorage.getItem("userInfo")).roleId == 2){
+            console.log(JSON.parse(localStorage.getItem("userInfo")).roleId);
+            this.isTeacher = true;
+        }
     },
 }
 </script>

@@ -71,11 +71,22 @@ export function getTeacherClassInfo(userClassInfo) {
         })
     }
 
-    //新增/修改课堂（无图片）
+//新增/修改课堂（无图片）
 export function newClass(classInfo) {
     return request({
         url: '/classes/addClass',
         method: 'post',
         data: classInfo,
+    })
+}
+
+//根据创建人ID查找课堂
+export function getClassByCreateUserId(createUserId) {
+    return request({
+        url: '/classes/getByCreateUserId',
+        method: 'post',
+        params:{
+            createUserId,
+        }
     })
 }
