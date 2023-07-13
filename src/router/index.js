@@ -117,6 +117,11 @@ const router = new VueRouter({
       component: () => import('@/views/user/addpaper.vue'),
     },
     {
+      path: '/startExam',
+      name: 'startExam',
+      component: () => import('@/views/user/startExam.vue'),
+    },
+    {
       path: '/myGraph',
       name: 'graph',
       component: () => import('@/views/graph/graphTest1.vue')
