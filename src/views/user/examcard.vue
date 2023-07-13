@@ -48,8 +48,19 @@ export default {
     methods: {
         startExam(){
             let roleId = JSON.parse(localStorage.getItem("userInfo")).roleId;
-            if(roleId == 1){
-                this.$message.success("成功选择");
+            if(this.item.paperId == null){
+                this.$message.error("暂不可用")
+            }else if(roleId == 1 && this.item.paperId != null){
+                let routeData = this.$router.resolve({
+                    path: '/startExam',
+                    query: {
+                        paperId: this.item.paperId,
+                        examId: this.item.examId,
+                        examTitle: this.item.examTitle,
+                    }
+                })
+                window.open(routeData.href, '_blank');
+                console.log(this.item)
             }
         },
         handleEdit(){
