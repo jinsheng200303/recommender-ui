@@ -50,7 +50,7 @@ export default {
             let roleId = JSON.parse(localStorage.getItem("userInfo")).roleId;
             if(this.item.paperId == null){
                 this.$message.error("暂不可用")
-            }else if(roleId == 1 && this.item.paperId != null){
+            }else if(this.item.paperId != null){
                 let routeData = this.$router.resolve({
                     path: '/startExam',
                     query: {
