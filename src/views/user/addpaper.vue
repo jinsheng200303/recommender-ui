@@ -41,6 +41,7 @@
 
 <script>
 import { getQuestionPage } from '@/api/testApis.js'
+import { findQuestionOptions } from '@/api/questionApis.js'
 import pretestpapercard from './pretestpapercard.vue';
 import selectedtestpapercard from './selectedtestpapercard.vue'
 import { handlePaper,getPaperQuestion } from '@/api/paperApis.js'
@@ -97,16 +98,25 @@ export default {
     created() {
         this.questionQuery.bankId = this.$route.query.bankId;
         this.paperId = this.$route.query.classId;
-    },
-    mounted() {
         getPaperQuestion(this.$route.query.paperId)
         .then((res) => {
             res.data.forEach((item) => {
                 this.selectedQuestionId.push(item.questionId)
                 this.selectedQuestionData.push(item)
             })
+        })
+        .then(() => {
+            this.selectedQuestionData.forEach((item) => {
+                findQuestionOptions(item.questionId)
+                .then((res) => {
+                    item.options = res.data;
+                })
+            })
             this.rightLoading = false;
         })
+    },
+    mounted() {
+        
     },
     methods: {
         //分页查询获取试题数据

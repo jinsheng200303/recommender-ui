@@ -14,7 +14,7 @@
         <el-radio-group v-model="radioValue">
           <el-radio 
             class="radioButton" 
-            v-for="item in selectData" 
+            v-for="item in records.options" 
             :key="item.optionId" 
             :label=item.optionLabel>
               {{ item.optionValue }}
@@ -53,13 +53,13 @@ export default {
       //选择答案值
       radioValue: "",
       //可选项值
-      selectData: [
+      // selectData: [
       // "status":1,
       // "optionId":1,
       // "questionId":1,
       // "optionLabel":"A",
       // "optionValue":"test"
-      ],
+      // ],
       isLoading: false,
       //是否已选择
       isNull: false,
@@ -103,7 +103,7 @@ export default {
     },
   },
   mounted() {
-    this.selectData = this.records.options;
+    // this.selectData = this.records.options;
     this.boxWidhth = 80;
     this.boxHeight = this.$refs.title.offsetHeight;
   },
