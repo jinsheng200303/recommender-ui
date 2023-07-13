@@ -6,14 +6,14 @@
             ref="examCardInfo">
                 <div class="title">
                     <div style="font-size: 1.5rem;">{{ examInfo.examTitle }}</div>
-                    <div style="color: rgb(147, 218, 40);">{{ examInfo.totalMarks }}</div>
+                    <div style="color: rgb(147, 218, 40);">{{  }}</div>
                 </div>
                 <div class="exam-time" style="color: #13a8e8;">
                     <div>{{ examInfo.startTime }}</div>
                     <div>{{ examInfo.endTime }}</div>
                 </div>
             </div>
-            <div class="handle-area">
+            <div class="handle-area" v-if="isTeacher">
                 <el-button type="primary" @click.stop="handleEdit">编 辑</el-button>
                 <el-button type="danger" @click.stop="handleDelete">删 除</el-button>
             </div>
@@ -102,6 +102,11 @@ export default {
             this.examInfo = newVal;
         }
     },
+    created() {
+        if(JSON.parse(localStorage.getItem("userInfo")).roleId == 2){
+            this.isTeacher = true;
+        }
+    },
     mounted() {
         this.boxHeight = this.$refs.examCardInfo.offsetHeight + 40;
     },
@@ -120,6 +125,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: rgb(245, 245, 245);
 }
 .exam-card:hover{
     transform: translate(2px,-6px);

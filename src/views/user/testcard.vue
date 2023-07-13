@@ -142,6 +142,7 @@ export default {
 
 <style scoped>
 .box-card {
+  background-color: rgb(255, 255, 255);
   border-radius: 5px;
   box-shadow: 1px 1px 10px -2px rgba(0, 0, 0, .2);
   transition: 0.6s;

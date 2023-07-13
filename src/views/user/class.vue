@@ -14,15 +14,13 @@
         </el-header>
         <el-main class="course-card-area">
             <ul
-            class="list"
-            v-infinite-scroll="load"
-            infinite-scroll-disabled="disabled">
-                <li v-for="classes in classData" class="list-item" :key="classes.classId">
+            class="infinite-list"
+            style="overflow:auto">
+                <li v-for="classes in classData" class="infinite-list-item" :key="classes.classId">
                     <classcard :records="classes" ref="classCard"></classcard>
                 </li>
             </ul>
-            <p class="infinite-footer" v-if="loading">加载中...</p>
-            <p class="infinite-footer" v-if="noMore&&!loading">没有更多了</p>
+            <!-- <p class="infinite-footer">{{ footerTip }}</p> -->
         </el-main>
         <addClass ref="addClass" @call-father="resetAfterAdd"></addClass>
         <joinclass ref="joinclass"></joinclass>
@@ -33,7 +31,7 @@
 import classcard from './classcard.vue'
 import addClass from './addclass.vue'
 import joinclass from './joinclass.vue'
-import { classPage } from '@/api/classApis.js'
+import { getClassByuserId } from '@/api/userApis.js'
 export default {
     components:{
         classcard,
@@ -55,36 +53,37 @@ export default {
             classData: [],
             pageInfo:{
                 className: "",
-                pageNum: 1,
+                pageNum: 0,
                 pageSize: 4,
             },
-            newDataLength: 4,
         }
     },
     computed: {
-        noMore () {
-            return this.newDataLength < this.pageInfo.pageSize
-        },
-        disabled () {
-          return this.loading || this.noMore
-        },
+        footerTip(){
+            if(this.loading){
+                return "加载中...";
+            }else if(this.noMore){
+                return "没有更多了";
+            }
+        }
     },
     methods: {
         //滑动加载获取数据
         load () {
-          this.loading = true;
-          setTimeout(() => {
+            // this.loading = true;
             this.getClass()
-            this.loading = false
-          }, 1000);
         },
         //获取新的课堂数据
         getClass() {
-            classPage(this.pageInfo)
+            // this.pageInfo.pageNum++;
+            let userId = JSON.parse(localStorage.getItem("userInfo")).userId;
+            getClassByuserId(userId)
             .then((res) => {
-                this.pageInfo.pageNum++;
-                this.classData.push(...res.data.records);
-                this.newDataLength = res.data.records.length;
+                this.classData.push(...res.data);
+                // if(res.data.records.length < this.pageInfo.pageSize){
+                //     this.noMore = true
+                // }
+                // this.loading = false
           });
         },
         //删除按钮显示
@@ -112,14 +111,13 @@ export default {
         resetAfterAdd(){
             this.classData.splice(0,this.classData.length);
             this.pageInfo.className = "";
-            this.pageInfo.pageNum = 1;
+            this.pageInfo.pageNum = 0;
             this.pageInfo.pageSize = 4;
             this.getClass();
         }
     },
     mounted() {
         this.getClass();
-        console.log()
     },
 }
 </script>
@@ -145,14 +143,17 @@ export default {
     }
     /* 课堂区域样式 */
     .course-card-area{
+        padding: 0;
         height: calc(100vh - 120px);
-        background: rgb(250, 250, 250);
+        background-color: rgb(245,245,245);
     }
-    .list{
+    .infinite-list{
+        padding: 20px;
+        box-sizing: border-box;
         height: calc(100vh - 120px);
         list-style: none;
     }
-    .list-item{
+    .infinite-list-item{
         width: 25%;
         float: left;
         margin-bottom: 40px;

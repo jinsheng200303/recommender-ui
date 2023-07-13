@@ -3,7 +3,7 @@
       <el-main>
         <div class="home-content">
         </div>
-        <el-footer>Footer</el-footer>
+        <el-footer>aaa</el-footer>
       </el-main>
     </div>
   </template>

@@ -121,7 +121,6 @@ export default {
             this.roleId = JSON.parse(window.localStorage.getItem("userInfo")).roleId;
             getUserInfoById(userId)
             .then((res) => {
-                console.log(JSON.stringify(res.data))
                 this.userInfo = res.data
             })
         },

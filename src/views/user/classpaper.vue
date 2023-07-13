@@ -123,7 +123,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #cedff3;
+    background: #b3e8e6;
 }
 .search-area{
     display: flex;

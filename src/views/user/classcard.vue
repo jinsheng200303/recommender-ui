@@ -4,11 +4,11 @@
             @click="newPage(records)" 
             @mouseover="handleHover"
             @mouseleave="handleLeave">
-            <img src="../../assets/image1.jpg" class="image" :class="{imageHover:isHover}">
+            <img :src="records.classPicture" class="image" :class="{imageHover:isHover}">
             <div class="class-card-info" :class="{infoHover:isHover}">
                 <div class="title" :class="{titleHover:isHover}">{{ records.className }}</div>
                 <div class="idInfo" :class="{idInfoHover:isHover}">课堂id:&nbsp;&nbsp;{{ records.classId }}</div>
-                <div class="description" :class="{descriptionHover:isHover}">&nbsp;&nbsp;&nbsp;&nbsp;{{ formatInfo }}</div>
+                <div class="description" :class="{descriptionHover:isHover}">{{ formatInfo }}</div>
             </div>
         </div>
     </div>
@@ -33,6 +33,7 @@ export default {
             })
             window.sessionStorage.setItem("classInfo",JSON.stringify(records))
             window.open(routeData.href, '_blank');
+            console.log(records);
         },
         handleHover(){
             this.isHover = true;
@@ -96,11 +97,11 @@ export default {
     bottom: 0;
     z-index: 2;
     backdrop-filter: blur(20px);
-    background-color: rgba(250, 250, 250, 0.1);
+    background-color: rgba(250, 250, 250, 0.3);
 }
 .infoHover{
     height: 50%;
-    background-color: rgba(250, 250, 250, .7);
+    background-color: rgba(255, 255, 255, 0.8);
 }
 .title{
     font-size: 1.3rem;
@@ -110,7 +111,7 @@ export default {
 }
 .titleHover{
     margin-left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-60%);
     /* font-size: 1.5rem; */
     margin-bottom: 5px;
 }

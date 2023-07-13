@@ -4,8 +4,8 @@
             <el-form-item label="课堂名:" prop="className">
                 <el-input v-model="classes.className"></el-input>
             </el-form-item>
-            <el-form-item label="课堂类别:" prop="classCategoryId">
-              <el-select v-model="classes.classCategoryId" placeholder="请选择" style="width: 100%;">
+            <el-form-item label="课堂类别:" prop="categoryId">
+              <el-select v-model="classes.categoryId" placeholder="请选择" style="width: 100%;">
                 <el-option v-for="item in classCategoryOptions" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
@@ -48,7 +48,7 @@
             callback();
           }
         };
-        var validateClassCategoryId = (rule, value, callback) => {
+        var validateCategoryId = (rule, value, callback) => {
           if (!value) {
             return callback(new Error('课堂类别不能为空'));
           } else {
@@ -67,7 +67,7 @@
                 className: "",
                 classPicture: "",
                 description: "",
-                classCategoryId: "",
+                categoryId: '',
                 createUserId: 0,
             },
             dialogFormVisible: false,
@@ -79,21 +79,36 @@
                 description: [
                     { validator: validateDescription, trigger: 'blur' }
                 ],
-                classCategoryId: [
-                    { validator: validateClassCategoryId, trigger: 'change' }
+                categoryId: [
+                    { validator: validateCategoryId, trigger: 'change' }
                 ],
                 classPicture: [
                     { validator: validateClassPicture, trigger: 'change' }
                 ],
             },
             //选择器选项
-            classCategoryOptions: [{
-              value: '1',
-              label: '数据库'
-            }, {
-              value: '2',
-              label: 'Java'
-            }],
+            classCategoryOptions: [
+                {
+                  value: '1',
+                  label: '数据库'
+                }, 
+                {
+                  value: '2',
+                  label: '数据结构'
+                },
+                {
+                  value: '3',
+                  label: '数学建模'
+                },
+                {
+                  value: '4',
+                  label: '计算机网络'
+                },
+                {
+                  value: '5',
+                  label: '操作系统'
+                },
+            ],
         };
       },
       methods: {
@@ -102,6 +117,7 @@
             if (valid) {
                 this.isLoading = true;
                 this.classes.createUserId = JSON.parse(localStorage.getItem("userInfo")).userId;
+                console.log(this.classes);
                 addClass(this.classes)
                 .then((res) => {
                     if (res.code == 200) {

@@ -226,6 +226,7 @@ export default {
     text-align: center;
     height: calc(100vh - 60px);
     background-color: rgb(250, 250, 250);
+    border: 0;
 }
 .el-menu-item{
     font-size: 1rem;
@@ -235,7 +236,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #cedff3;
+    /* background: #cedff3; */
+    background-color: rgb(245,245,245);
 }
 .search-input{
     width: 70%;
@@ -258,16 +260,17 @@ export default {
 .test-card-area{
     height: calc(100vh - 120px);
     padding: 0;
-    background: rgb(250, 250, 250);
 }
 .infinite-list{
     height: calc(100vh - 120px);
     list-style: none;
     padding: 30px;
     box-sizing: border-box;
+    background-color: rgb(245, 245, 245);
 }
 .infinite-list-item{
     margin-bottom: 20px;
+    background-color: rgb(240, 240, 240);
 }
 .infinite-footer{
     text-align: center;

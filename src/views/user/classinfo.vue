@@ -12,12 +12,36 @@
                         :router="true"
                         @select="handleSelect"
                         :default-active="activeClassInfoPath">
-                        <el-menu-item 
+                        <!-- <el-menu-item 
                             v-for="item in asideNavData"
                             :key="item.key"
                             :index="item.url">
                             <i class="el-icon-s-custom"></i>
                             <span slot="title">{{ item.name }}</span>
+                        </el-menu-item> -->
+                        <el-menu-item index="/classinfo/classResume">
+                            <i class="el-icon-info"></i>
+                            <span slot="title">简 介</span>
+                        </el-menu-item>
+                        <el-menu-item index="/classinfo/announcement">
+                            <i class="el-icon-message-solid"></i>
+                            <span slot="title">公 告</span>
+                        </el-menu-item>
+                        <el-menu-item index="/classinfo/student">
+                            <i class="el-icon-s-custom"></i>
+                            <span slot="title">学 员</span>
+                        </el-menu-item>
+                        <el-menu-item index="/classinfo/classexam">
+                            <i class="el-icon-edit"></i>
+                            <span slot="title">考 试</span>
+                        </el-menu-item>
+                        <el-menu-item index="/classinfo/classpaper" v-if="isTeacher">
+                            <i class="el-icon-s-order"></i>
+                            <span slot="title">试 卷</span>
+                        </el-menu-item>
+                        <el-menu-item index="/classinfo/classStatics">
+                            <i class="el-icon-s-data"></i>
+                            <span slot="title">统 计</span>
                         </el-menu-item>
                     </el-menu>
                 </el-aside>
@@ -34,29 +58,6 @@
     export default{
         data() {
             return {
-                //侧边导航栏数据
-                asideNavData: [
-                    {
-                        key: 1,
-                        url: '/classinfo/announcement',
-                        name: '公 告',
-                    },
-                    {
-                        key: 2,
-                        url: '/classinfo/student',
-                        name: '学 员',
-                    },
-                    {
-                        key: 3,
-                        url: '/classinfo/classexam',
-                        name: '考 试',
-                    },
-                    {
-                        key: 4,
-                        url: '/classinfo/classpaper',
-                        name: '试 卷',
-                    },
-                ],
                 //上一个窗口传递参数接收
                 // classInfo:{
                 //     classId: 0,
@@ -67,6 +68,7 @@
                 classInfo: {},
                 activeClassInfoPath: '',
                 isCollapse: true,
+                isTeacher: false,
             }
         },
         mounted() {
@@ -86,9 +88,12 @@
         created() {
             if(sessionStorage.getItem("classInfoPath") == undefined
             || sessionStorage.getItem("classInfoPath") == null){
-                this.activeClassInfoPath = '/classinfo/student';
+                this.activeClassInfoPath = '/classinfo/classResume';
             }else {
                 this.activeClassInfoPath = sessionStorage.getItem("classInfoPath");
+            }
+            if(JSON.parse(localStorage.getItem("userInfo")).roleId == 2){
+                this.isTeacher = true;
             }
         },
     }
@@ -97,7 +102,7 @@
 <style scoped>
 .el-container{
     position: relative;
-    background-color: rgb(205, 200, 182);
+    background-color: rgb(231, 221, 173);
 
 }
 .asideArea{
@@ -115,8 +120,8 @@
 .asideMenu{
     text-align: center;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);  
-    backdrop-filter: blur(40px); 
+    background-color: rgba(255, 255, 255, 0.6);  
+    backdrop-filter: blur(20px); 
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -173,7 +178,10 @@
 }
 .el-menu-item:hover {
     transition: 0.6s;
-    background: rgb(211, 208, 208);
+    background: rgb(189, 186, 186);
+}
+.el-menu-item.is-active{
+    background: #d4e6fa;
 }
 .el-main{
     padding: 0;

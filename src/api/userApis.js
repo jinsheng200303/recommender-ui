@@ -81,3 +81,11 @@ export function editUserInfo(userInfo) {
         data: userInfo
     })
 }
+
+//根据用户ID查找其加入的课堂信息
+export function getClassByuserId(userId) {
+    return request({
+        url: '/person/view/' + userId,
+        method: 'get',
+    })
+}

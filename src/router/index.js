@@ -87,7 +87,7 @@ const router = new VueRouter({
       path: '/classinfo',
       name: 'classinfo',
       component: () => import('@/views/user/classinfo.vue'),
-      redirect: '/classinfo/student',
+      redirect: '/classinfo/classResume',
       children: [
         {
           path: '/classinfo/student',
@@ -108,6 +108,16 @@ const router = new VueRouter({
           path: '/classinfo/classpaper',
           name: 'classpaper',
           component: () => import('@/views/user/classpaper.vue'),
+        },
+        {
+          path: '/classinfo/classResume',
+          name: 'classResume',
+          component: () => import('@/views/user/classResume.vue'),
+        },
+        {
+          path: '/classinfo/classStatics',
+          name: 'classStatics',
+          component: () => import('@/views/user/classStatics.vue'),
         },
       ]
     },

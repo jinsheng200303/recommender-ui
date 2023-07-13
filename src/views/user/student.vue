@@ -3,7 +3,6 @@
         <editStudent ref="editStudent"></editStudent>
         <el-table
             :data="studentData.filter(data => !search || data.userId.toString().includes(search) || data.userName.toLowerCase().includes(search.toLowerCase()))"
-            style="width: 100%"
             @row-click="selectStudent">
             <el-table-column prop="userId" label="学生id">
             </el-table-column>
@@ -11,9 +10,9 @@
             </el-table-column>
             <el-table-column>
                 <template slot="header" slot-scope="scope">
-                    <el-input v-model="search" size="mini" placeholder="输入关键词搜索" />
+                    <el-input class="header-input" size="small" v-model="search"  placeholder="输入关键词搜索" />
                 </template>
-                <template slot-scope="scope">
+                <template slot-scope="scope" v-if="isTeacher">
                     <!-- <el-button size="mini" type="primary" @click.stop="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
                     <el-button size="mini" type="danger" @click.stop="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
@@ -71,6 +70,7 @@ export default {
                 userName: ""
             },
             search: '', //搜索框
+            isTeacher: false,
         }
     },
     methods: {
@@ -152,6 +152,9 @@ export default {
     },
     created() {
         this.classId = JSON.parse(window.sessionStorage.getItem("classInfo")).classId
+        if(JSON.parse(localStorage.getItem("userInfo")).roleId == 2){
+            this.isTeacher = true;
+        }
     },
     mounted() {
         this.getData();
@@ -159,4 +162,29 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-table{
+    margin-left: 0;
+    width: 80%;
+    margin: auto;
+    height: 100vh;
+    background-color: rgb(255, 255, 255,0);
+}
+.header-input{
+    width: 60%;
+}
+/* ::v-deep .el-table__row{
+background-color: rgb(255, 255, 255,0);
+}
+::v-deep .el-table--border th.el-table__cell {
+background-color: rgb(255, 255, 255,0);
+}
+::v-deep .el-table__expanded-cell {
+  background-color: transparent !important;
+} */
+::v-deep .el-table th,
+::v-deep .el-table tr,
+::v-deep .el-table td {
+  background-color: transparent;
+}
+</style>
