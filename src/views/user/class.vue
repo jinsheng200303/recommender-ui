@@ -158,6 +158,11 @@ export default {
         float: left;
         margin-bottom: 40px;
     }
+    @media(max-width: 1300px){
+        .infinite-list-item{
+        width: 33.3%;
+    }
+    }
     .infinite-footer{
         float: left;
         width: 100%;

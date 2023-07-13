@@ -58,7 +58,7 @@ export default {
             //分页查询
             questionQuery: {
                 pageNum: 0,
-                pageSize: 4,
+                pageSize: 10,
                 questionStatement: "",
                 bankId: 0,
             },
@@ -116,7 +116,7 @@ export default {
         })
     },
     mounted() {
-        
+
     },
     methods: {
         //分页查询获取试题数据
@@ -217,7 +217,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #cedff3;
+    /* background: #cedff3; */
+    background: #b3e8d8;
 }
 .selected-header-area{
     display: flex;

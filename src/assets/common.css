@@ -13,3 +13,6 @@ html,body{
     backdrop-filter: blur(10px);
     background-color: rgb(255, 255, 255,0.1)
 }
+.el-message-box{
+  border-radius: 8px;
+}

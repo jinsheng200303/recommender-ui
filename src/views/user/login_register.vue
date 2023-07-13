@@ -213,7 +213,7 @@ export default {
             let userInfo = res.data
             window.localStorage.setItem("userInfo", JSON.stringify(userInfo))
             window.localStorage.setItem("token", JSON.stringify(userInfo.token))
-            this.$message.success(res.msg);
+            // this.$message.success(res.msg);
             if(userInfo.roleId == 1||userInfo.roleId == 2){
               this.$router.push({
                 path: '/index_content'
