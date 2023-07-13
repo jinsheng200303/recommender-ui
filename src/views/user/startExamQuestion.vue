@@ -89,7 +89,7 @@ export default {
 .title {
   padding: 10px;
   transition: 0.6s;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   word-break: break-all;
   word-wrap: break-word;
 }

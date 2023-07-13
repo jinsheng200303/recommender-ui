@@ -12,7 +12,7 @@
                 </startExamQuestion>
             </div>
             <div class="footer">
-                <el-button type="primary" @click="submitAnswer">提 交</el-button>
+                <el-button type="primary" @click="submitAnswer" v-if="!isSubmit">提 交</el-button>
             </div>
         </div>
     </div>
@@ -31,6 +31,7 @@ export default {
             questionData: [],
             selectedAnswer: [],
             correctAnswer: [],
+            isSubmit: false,
         }
     },
     created() {
@@ -48,12 +49,12 @@ export default {
                 })
             })
         })
+        if(JSON.parse(localStorage.getItem("userInfo")).roleId == 2){
+            this.isSubmit = true;
+        }
     },
     mounted() {
-        setTimeout(() => {
-            console.log(this.questionData);
-            console.log(this.correctAnswer);
-        }, 1000);
+
     },
     methods: {
         selectedRefresh(radioValue,index){
@@ -70,6 +71,7 @@ export default {
                 this.questionData.forEach((item,index) => {
                     this.$refs.examQuestion[index].submitRefresh();
                 })
+                this.isSubmit = true;
             })
         }
     },
