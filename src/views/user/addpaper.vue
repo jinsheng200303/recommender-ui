@@ -97,7 +97,7 @@ export default {
     },
     created() {
         this.questionQuery.bankId = this.$route.query.bankId;
-        this.paperId = this.$route.query.classId;
+        this.paperId = this.$route.query.paperId;
         getPaperQuestion(this.$route.query.paperId)
         .then((res) => {
             res.data.forEach((item) => {

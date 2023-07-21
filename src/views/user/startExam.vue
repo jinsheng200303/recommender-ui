@@ -3,9 +3,9 @@
         <div class="paper-card">
             <div class="title">{{ this.$route.query.examTitle }}</div>
             <div class="question-area">
-                <startExamQuestion v-for="(item,index) in questionData" 
-                :records="item" 
-                :index="index" 
+                <startExamQuestion v-for="(item,index) in questionData"
+                :records="item"
+                :index="index"
                 :key="index"
                 @selectedRefresh="selectedRefresh"
                 ref="examQuestion">
@@ -21,6 +21,7 @@
 <script>
 import { getPaperQuestion } from '@/api/paperApis.js'
 import { findQuestionOptions } from '@/api/questionApis.js'
+import { examSubmit } from '@/api/examApis'
 import startExamQuestion from './startExamQuestion.vue'
 export default {
     components: {
@@ -40,6 +41,7 @@ export default {
             res.data.forEach((item) => {
                 this.questionData.push(item);
                 this.correctAnswer.push(item.answer);
+                item.studentAnswer = '';
             })
         }).then(() => {
             this.questionData.forEach((item) => {
@@ -59,6 +61,7 @@ export default {
     methods: {
         selectedRefresh(radioValue,index){
             this.selectedAnswer[index] = radioValue;
+            this.questionData[index].studentAnswer = radioValue;
         },
         submitAnswer(){
             this.$confirm("确定提交?", "提示", {
@@ -68,6 +71,16 @@ export default {
             })
             .then(() => {
                 console.log(this.selectedAnswer)
+                console.log(this.questionData)
+                let userId = JSON.parse(localStorage.getItem("userInfo")).userId;
+                examSubmit(userId,this.$route.query.examId,JSON.stringify(this.questionData))
+                    .then((res) => {
+                      if (res.code == 200){
+                        this.$message.success(res.msg)
+                      }else {
+                        this.$message.error(res.msg)
+                      }
+                    })
                 this.questionData.forEach((item,index) => {
                     this.$refs.examQuestion[index].submitRefresh();
                 })
