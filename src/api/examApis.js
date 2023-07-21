@@ -46,3 +46,16 @@ export function autoGenerateExam(generatePapersQuery) {
         data: generatePapersQuery,
     })
 }
+
+//学生提交考卷保存数据
+export function examSubmit(userId,examId,paper) {
+    return request({
+        url: '/student-paper/save',
+        method: 'post',
+        data:{
+            userId,
+            examId,
+            paper,
+        }
+    })
+}
