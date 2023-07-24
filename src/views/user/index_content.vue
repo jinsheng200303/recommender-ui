@@ -1,7 +1,9 @@
 <template>
     <el-container direction="vertical">
         <el-header><navbar></navbar></el-header>
-        <router-view></router-view>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
         <component :is="componentName"></component>
     </el-container>
 </template>
