@@ -1,48 +1,138 @@
 <template>
     <div>
+      <el-header>
+        <el-input
+            class="search-input"
+            placeholder="请输入内容"
+            suffix-icon="el-icon-search"
+            v-model="input">
+        </el-input>
+      </el-header>
       <el-main>
-        <div class="home-content">
-        </div>
-        <el-footer>aaa</el-footer>
+        <template >
+          <ul
+              class="infinite-list"
+              v-infinite-scroll="load"
+              style="overflow:auto">
+            <li v-for="item in recommendData" class="infinite-list-item">
+              <component
+                  :key="item.knowledgeId"
+                  :is="cardCategory(item.resourceType)"
+                  :recommendData="item">
+              </component>
+            </li>
+            <p class="infinite-footer">{{ footerTip }}</p>
+          </ul>
+
+        </template>
       </el-main>
     </div>
   </template>
   
   <script>
+  import recommendTextCard from "@/views/user/recommendTextCard.vue";
+  import recommendVideoCard from "@/views/user/recommendVideoCard.vue";
+  import { getResourcePage } from "@/api/resourcesApis";
+  import testcard from "@/views/user/testcard.vue";
+
   export default {
     name: "home",
+    components: {
+      testcard,
+      recommendVideoCard,
+      recommendTextCard,
+    },
     data() {
       return {
-         homeData: "" 
-        };
+        recommendData: [],
+        pageInfo:{
+          pageNum: 1,
+          pageSize: 8,
+          resourcesName: '',
+        },
+        input: '',
+        isLoading: true,
+        noMore: false,
+      };
     },
     methods: {
-      
+      cardCategory(resourceType){
+        if(resourceType === "文档"){
+          return "recommendTextCard";
+        }else if(resourceType === "视频"){
+          return "recommendVideoCard";
+        }
+      },
+      load(){
+        if(!this.noMore){
+          this.isLoading = true;
+          this.getRecommendData(JSON.parse(JSON.stringify(this.pageInfo)));
+        }
+      },
+      getRecommendData(pageInfo){
+        this.pageInfo.pageNum++;
+        getResourcePage(pageInfo.pageNum,pageInfo.pageSize,pageInfo.resourcesName).then((res) => {
+          if(res.code == 200){
+            this.recommendData.push(...res.data.records);
+            if(res.data.records.length < this.pageInfo.pageSize){
+              this.noMore = true;
+            }
+          }
+        })
+        this.isLoading = false;
+      },
     },
     created() {
-      
+
     },
     mounted() {
 
+    },
+    computed: {
+      footerTip(){
+        if(this.isLoading){
+          return "加载中...";
+        }else if(this.noMore){
+          return "没有更多了";
+        }
+      },
     },
   };
   
   </script>
   
-  <style scoped > 
+  <style scoped >
+  .el-header{
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+  }
+  .search-input{
+    width: 25%;
+    max-width: 350px;
+    min-width: 175px;
+    margin: 10px 20px;
+  }
   .el-main {
-      background-color: #E9EEF3;
-      color: #333;
-      padding: 0;
+    background-color: rgb(245, 245, 245);
+    padding: 0;
+    height: calc(100vh - 120px);
   }
-  .el-footer {
-      background-color: #B3C0D1;
-      color: #333;
-      padding: 0;
+  .infinite-list{
+    height: calc(100vh - 120px);
+    list-style: none;
+    padding: 30px;
+    box-sizing: border-box;
   }
-  .home-content{
-    /* width: 100%;
-    height: 1500px; */
-    background-color: rgb(250, 250, 250);
+  .infinite-list-item{
+    margin-bottom: 40px;
+    float: left;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .infinite-footer{
+    text-align: center;
   }
   </style>
