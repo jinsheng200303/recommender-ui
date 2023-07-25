@@ -23,3 +23,11 @@ export function getUsersRole() {
             method: 'get'
         })
     }
+
+//根据用户ID查找其知识点掌握程度
+export function getDinaById(userId) {
+    return request({
+        url: '/person/dina/' +userId,
+        method: 'get',
+    })
+}

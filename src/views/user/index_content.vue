@@ -27,7 +27,7 @@
       let userId = JSON.parse(localStorage.getItem("userInfo")).userId;
       getPersonStyleById(userId).then((res) => {
         if(res.code == 200){
-          if(res.data.records[0].answers === null){
+          if(res.data.records.length === 0 || res.data.records[0].answers === null){
             this.componentName = "personStylePaperDialog";
           }
         }else {
