@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { recordBrowse } from '@/api/browseRecordsApis'
 export default {
   props: ["recommendData"],
   data() {
@@ -17,8 +18,14 @@ export default {
   },
   methods: {
     selectedCard(){
-      this.$message.success("aaa")
-    }
+      recordBrowse(this.textCardData.resourceId,JSON.parse(localStorage.getItem("userInfo")).userId).then((res) => {
+        if (res.code === 200){
+          window.open(this.textCardData.resourceLink, '_blank');
+        }else {
+          this.$message.error(res.msg);
+        }
+      })
+    },
   },
   computed: {
     formatResourceName(){
