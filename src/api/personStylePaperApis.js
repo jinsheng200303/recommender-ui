@@ -24,3 +24,15 @@ export function updatePersonStyle(userId,answers) {
         },
     })
 }
+
+//获取学习资源推荐
+export function getRecommendResource(userId) {
+    return request({
+        url: '/person-style-paper/resource-recommend',
+        method: 'post',
+        params: {
+            userId,
+        },
+
+    })
+}

@@ -32,7 +32,7 @@
   <script>
   import recommendTextCard from "@/views/user/recommendTextCard.vue";
   import recommendVideoCard from "@/views/user/recommendVideoCard.vue";
-  import { getResourcePage } from "@/api/resourcesApis";
+  import { getRecommendResource } from "@/api/personStylePaperApis";
   import testcard from "@/views/user/testcard.vue";
 
   export default {
@@ -71,12 +71,14 @@
       },
       getRecommendData(pageInfo){
         this.pageInfo.pageNum++;
-        getResourcePage(pageInfo.pageNum,pageInfo.pageSize,pageInfo.resourcesName).then((res) => {
+        getRecommendResource(JSON.parse(localStorage.getItem("userInfo")).userId).then((res) => {
           if(res.code == 200){
-            this.recommendData.push(...res.data.records);
-            if(res.data.records.length < this.pageInfo.pageSize){
+            this.recommendData.push(...res.data);
+            if(res.data.length < this.pageInfo.pageSize){
               this.noMore = true;
             }
+          }else {
+            this.$message.error(res.msg)
           }
         })
         this.isLoading = false;
@@ -134,5 +136,7 @@
   }
   .infinite-footer{
     text-align: center;
+    width: 100%;
+    float: left;
   }
   </style>
