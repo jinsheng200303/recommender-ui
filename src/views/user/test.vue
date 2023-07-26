@@ -218,7 +218,7 @@ export default {
         //侧边导航激活位置加载
         let testPath = sessionStorage.getItem("testPath");
         if(testPath == undefined || testPath == null){
-            this.activetestPath = '综合汉语';
+            this.activetestPath = '推荐';
         }else {
             this.activetestPath = sessionStorage.getItem("testPath");
         }
