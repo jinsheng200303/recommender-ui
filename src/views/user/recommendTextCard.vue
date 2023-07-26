@@ -4,7 +4,7 @@
       类别:{{ textCardData.resourceType }}
     </div>
     <div class="text-card-info">
-      {{ formatResourceName }}
+      {{ textCardData.resourceName }}
     </div>
   </div>
 </template>
@@ -32,13 +32,7 @@ export default {
     },
   },
   computed: {
-    formatResourceName(){
-      if (this.textCardData.resourceName.length > this.maxTitleLength) {
-        return this.textCardData.resourceName.slice(0,this.maxTitleLength) + '...';
-      }else {
-        return this.textCardData.resourceName;
-      }
-    },
+
   }
 }
 </script>
@@ -57,7 +51,8 @@ export default {
   background-color: white;
 }
 .recommend-text-card:hover{
-  box-shadow: -1px 3px 15px 3px rgba(0, 0, 0, .3);
+  transform: translateY(-8px);
+  box-shadow: -1px 3px 10px 2px rgba(0, 0, 0, .3);
 }
 .text-card-title{
   font-size: 1rem;
@@ -67,5 +62,11 @@ export default {
   font-size: 0.9rem;
   line-height: 20px;
   color: #504f4f;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* 这里是超出几行省略 */
+  overflow: hidden;
 }
 </style>

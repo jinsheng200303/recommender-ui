@@ -8,7 +8,7 @@
             <div class="class-card-info" :class="{infoHover:isHover}">
                 <div class="title" :class="{titleHover:isHover}">{{ records.className }}</div>
                 <div class="idInfo" :class="{idInfoHover:isHover}">课堂id:&nbsp;&nbsp;{{ records.classId }}</div>
-                <div class="description" :class="{descriptionHover:isHover}">{{ formatInfo }}</div>
+                <div class="description" :class="{descriptionHover:isHover}">{{ records.description }}</div>
             </div>
         </div>
     </div>
@@ -43,17 +43,7 @@ export default {
         }
     },
     computed: {
-        formatInfo(){
-            if(this.records.description != null){
-                if (this.records.description.length > 78) {
-                    return this.records.description.slice(0, 78) + '...';
-                }else {
-                    return this.records.description;
-                }
-            }else {
-                return this.records.description;
-            }
-        }
+
     },
 }
 </script>
@@ -127,6 +117,12 @@ export default {
     word-wrap: break-word;
 }
 .descriptionHover{
-    display: block;
+    //display: block;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5; /* 这里是超出几行省略 */
+  overflow: hidden;
 }
 </style>
