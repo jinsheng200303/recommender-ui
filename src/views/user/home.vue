@@ -16,7 +16,7 @@
               style="overflow:auto">
             <li class="recommend-area">
               <div class="recommend-container">
-                <div class="recommend-container-title">推 荐</div>
+                <div class="recommend-container-title">资 源 推 荐</div>
                 <div class="recommend-card-wrapper"
                      v-for="item in recommendData"
                      :key="item.resourcesId">
@@ -26,6 +26,7 @@
                 </div>
               </div>
             </li>
+            <div class="lesson-title">公 共 课 程 资 源</div>
             <li v-for="item in lessonData" class="infinite-list-item">
               <recommend-video-card :recommendData="item"></recommend-video-card>
             </li>
@@ -132,11 +133,8 @@
     height: calc(100vh - 120px);
   }
   .recommend-container{
-    border-radius: 10px;
-    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, .2);
-    width: 90%;
-    height: 100%;
-    background-color: white;
+    //width: 100%;
+    //height: 100%;
   }
   .recommend-container-title{
     text-align: center;
@@ -144,24 +142,32 @@
     margin-top: 3px;
   }
   .recommend-area{
-    width: 50%;
-    height: 265px;
+    width: 100%;
+    //height: 265px;
     margin-bottom: 40px;
     float: left;
-    display: flex;
+    //display: flex;
     //flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    //flex-wrap: wrap;
+    //justify-content: center;
+    //align-items: center;
   }
   .recommend-card-wrapper{
     float: left;
-    width: 33.3%;
+    width: 100%;
     box-sizing: border-box;
     padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .lesson-title{
+    width: 100%;
+    height: 50px;
+    float: left;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
   }
   .infinite-list{
     height: calc(100vh - 120px);

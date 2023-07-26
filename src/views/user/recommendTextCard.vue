@@ -39,16 +39,20 @@ export default {
 
 <style scoped>
 .recommend-text-card{
-  width: 180px;
+  //width: 180px;
   height: 90px;
+  width: 100%;
   border-radius: 5px;
   box-shadow: 1px 1px 10px -2px rgba(0, 0, 0, .2);
   overflow: hidden;
   box-sizing: border-box;
-  padding: 15px;
+  padding: 20px;
   transition: 0.6s;
   cursor: default;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 .recommend-text-card:hover{
   transform: translateY(-3px);
@@ -57,6 +61,13 @@ export default {
 .text-card-title{
   font-size: 1rem;
   line-height: 22px;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* 这里是超出几行省略 */
+  overflow: hidden;
+  margin-bottom: 5px;
 }
 .text-card-info{
   font-size: 0.9rem;
