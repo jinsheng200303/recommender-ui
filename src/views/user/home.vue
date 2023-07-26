@@ -14,16 +14,20 @@
               class="infinite-list"
               v-infinite-scroll="load"
               style="overflow:auto">
-            <li v-for="item in recommendData" class="infinite-list-item">
-              <component
-                  :key="item.knowledgeId"
-                  :is="cardCategory(item.resourceType)"
-                  :recommendData="item">
-              </component>
+            <li class="recommend-area">
+              <div class="recommend-card-wrapper"
+                   v-for="item in recommendData"
+                   :key="item.resourcesId">
+                <recommend-text-card
+                    :recommendData="item">
+                </recommend-text-card>
+              </div>
+            </li>
+            <li v-for="item in lessonData" class="infinite-list-item">
+              <recommend-video-card :recommendData="item"></recommend-video-card>
             </li>
             <p class="infinite-footer">{{ footerTip }}</p>
           </ul>
-
         </template>
       </el-main>
     </div>
@@ -34,6 +38,7 @@
   import recommendVideoCard from "@/views/user/recommendVideoCard.vue";
   import { getRecommendResource } from "@/api/personStylePaperApis";
   import testcard from "@/views/user/testcard.vue";
+  import {getLessonPage} from "@/api/lessonApis";
 
   export default {
     name: "home",
@@ -45,6 +50,7 @@
     data() {
       return {
         recommendData: [],
+        lessonData: [],
         pageInfo:{
           pageNum: 1,
           pageSize: 8,
@@ -56,25 +62,18 @@
       };
     },
     methods: {
-      cardCategory(resourceType){
-        if(resourceType === "文档"){
-          return "recommendTextCard";
-        }else if(resourceType === "视频"){
-          return "recommendVideoCard";
-        }
-      },
       load(){
         if(!this.noMore){
           this.isLoading = true;
-          this.getRecommendData(JSON.parse(JSON.stringify(this.pageInfo)));
+          this.getLessonData(JSON.parse(JSON.stringify(this.pageInfo)));
         }
       },
-      getRecommendData(pageInfo){
+      getLessonData(pageInfo){
         this.pageInfo.pageNum++;
-        getRecommendResource(JSON.parse(localStorage.getItem("userInfo")).userId).then((res) => {
-          if(res.code == 200){
-            this.recommendData.push(...res.data);
-            if(res.data.length < this.pageInfo.pageSize){
+        getLessonPage(pageInfo).then((res) => {
+          if(res.code === 200){
+            this.lessonData.push(...res.data.records);
+            if(res.data.records.length < this.pageInfo.pageSize){
               this.noMore = true;
             }
           }else {
@@ -83,9 +82,18 @@
         })
         this.isLoading = false;
       },
+      getRecommendData(){
+        getRecommendResource(JSON.parse(localStorage.getItem("userInfo")).userId).then((res) => {
+          if(res.code == 200){
+            this.recommendData.push(...res.data);
+          }else {
+            this.$message.error(res.msg)
+          }
+        })
+      },
     },
     created() {
-
+      this.getRecommendData();
     },
     mounted() {
 
@@ -119,6 +127,25 @@
     background-color: rgb(245, 245, 245);
     padding: 0;
     height: calc(100vh - 120px);
+  }
+  .recommend-area{
+    width: 50%;
+    height: 265px;
+    margin-bottom: 40px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .recommend-card-wrapper{
+    float: left;
+    width: 33.3%;
+    box-sizing: border-box;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .infinite-list{
     height: calc(100vh - 120px);
