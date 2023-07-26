@@ -51,7 +51,7 @@ export default {
   background-color: white;
 }
 .recommend-text-card:hover{
-  transform: translateY(-8px);
+  transform: translateY(-3px);
   box-shadow: -1px 3px 10px 2px rgba(0, 0, 0, .3);
 }
 .text-card-title{
