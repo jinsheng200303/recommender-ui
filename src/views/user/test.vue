@@ -45,7 +45,9 @@
 
 <script>
 import { getQuestionPage,getQuestionBank } from '@/api/testApis.js'
+import { getRecommendQuestion } from '@/api/personStylePaperApis'
 import testcard from './testcard.vue'
+import {findQuestionOptions} from "@/api/questionApis";
 export default {
     components: {
         testcard,
@@ -60,6 +62,10 @@ export default {
             },
             //侧边导航栏题库数据
             asideNavData: [
+              {
+                bankName: '推荐',
+                bankId: -1,
+              },
                 // {
                 //     "status": "启用",
                 //     "bankId": 1,
@@ -115,11 +121,15 @@ export default {
         handleSelect(key, keyPath) {
             if(key != sessionStorage.getItem("testPath")){
                 sessionStorage.setItem("testPath",key);
-                this.asideNavData.forEach((item) => {
+                if(key !== "推荐"){
+                  this.asideNavData.forEach((item) => {
                     if(item.bankName == key){
-                        this.questionQuery.bankId = item.bankId;
+                      this.questionQuery.bankId = item.bankId;
                     }
-                })
+                  })
+                }else {
+                  this.questionQuery.bankId = -1;
+                }
                 this.questionQuery.pageNum = this.init.pageNum;
                 this.questionQuery.pageSize = this.init.pageSize;
                 this.newDataLength = this.init.newDataLength;
@@ -149,21 +159,40 @@ export default {
         getQuestionData(questionQuery){
             //放在第一步 防止异步请求同一页数据
             this.questionQuery.pageNum++;
-            getQuestionPage(questionQuery)
-            .then((res) => {
+            if(questionQuery.bankId == -1){
+              getRecommendQuestion(JSON.parse(localStorage.getItem("userInfo")).userId).then((res) => {
                 if(res.code == 200){
-                    this.questionData.push(...res.data.records)
-                    this.newDataLength = res.data.records.length;
+                  this.questionData.push(...res.data)
+                  this.newDataLength = res.data.length;
                 }else {
-                    this.questionQuery.pageNum--;
-                    this.$message.error(res.msg);
+                  this.questionQuery.pageNum--;
+                  this.$message.error(res.msg);
                 }
+              }).then(() => {
+                this.questionData.forEach((item) => {
+                  findQuestionOptions(item.questionId).then((res) => {
+                        item.options = res.data;
+                  })
+                })
                 this.isLoading = false;
-            }).catch((err) => {
+              })
+            }else {
+              getQuestionPage(questionQuery)
+                  .then((res) => {
+                    if(res.code == 200){
+                      this.questionData.push(...res.data.records)
+                      this.newDataLength = res.data.records.length;
+                    }else {
+                      this.questionQuery.pageNum--;
+                      this.$message.error(res.msg);
+                    }
+                    this.isLoading = false;
+                  }).catch((err) => {
                 this.questionQuery.pageNum--;
                 this.isLoading = false;
                 console.error(err);
-            })
+              })
+            }
         },
         //滚动加载方法
         load () {

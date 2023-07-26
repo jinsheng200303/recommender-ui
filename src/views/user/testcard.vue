@@ -137,6 +137,14 @@ export default {
     this.selectData = this.records.options;
     this.boxHeight = this.$refs.title.offsetHeight;
   },
+  watch: {
+    records: {
+      deep: true,
+      handler(newValue){
+        this.selectData = newValue.options;
+      }
+    }
+  }
 }
 </script>
 

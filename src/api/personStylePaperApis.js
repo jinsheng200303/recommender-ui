@@ -36,3 +36,15 @@ export function getRecommendResource(userId) {
 
     })
 }
+
+//获取学习资源推荐
+export function getRecommendQuestion(userId) {
+    return request({
+        url: '/person-style-paper/question-recommend',
+        method: 'post',
+        params: {
+            userId,
+        },
+
+    })
+}
