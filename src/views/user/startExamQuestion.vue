@@ -53,6 +53,9 @@ export default {
         },
         submitRefresh(){
             this.isSubmited = true;
+        },
+        checkRefresh(){
+          this.radioValue = this.records.studentAnswer;
         }
     },
     computed: {

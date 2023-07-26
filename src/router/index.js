@@ -124,6 +124,11 @@ const router = new VueRouter({
           name: 'classGraph',
           component: () => import('@/views/user/classGraph.vue'),
         },
+        {
+          path: '/classinfo/classexaminfo',
+          name: 'classexaminfo',
+          component: () => import('@/views/user/classexaminfo.vue'),
+        },
       ]
     },
     {
@@ -135,6 +140,11 @@ const router = new VueRouter({
       path: '/startExam',
       name: 'startExam',
       component: () => import('@/views/user/startExam.vue'),
+    },
+    {
+      path: '/checkExam',
+      name: 'checkExam',
+      component: () => import('@/views/user/checkExam.vue'),
     },
     {
       path: '/myGraph',

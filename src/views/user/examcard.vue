@@ -9,11 +9,12 @@
                     <div style="color: rgb(147, 218, 40);">{{  }}</div>
                 </div>
                 <div class="exam-time" style="color: #13a8e8;">
-                    <div>{{ examInfo.startTime }}</div>
-                    <div>{{ examInfo.endTime }}</div>
+                    <div>开始时间:{{ examInfo.startTime }}</div>
+                    <div>结束时间:{{ examInfo.endTime }}</div>
                 </div>
             </div>
             <div class="handle-area" v-if="isTeacher">
+                <el-button type="success" @click.stop="handleCheck">详 情</el-button>
                 <el-button type="primary" @click.stop="handleEdit">编 辑</el-button>
                 <el-button type="danger" @click.stop="handleDelete">删 除</el-button>
             </div>
@@ -61,8 +62,16 @@ export default {
                     }
                 })
                 window.open(routeData.href, '_blank');
-                console.log(this.item)
             }
+        },
+        handleCheck(){
+          this.$router.push({
+            name: 'classexaminfo',
+            query: {
+              examId: this.item.examId,
+              examTitle: this.item.examTitle,
+            }
+          })
         },
         handleEdit(){
             this.$nextTick(() => {

@@ -109,7 +109,6 @@ export default {
     created() {
         this.examsQuery.classId = JSON.parse(window.sessionStorage.getItem("classInfo")).classId;
         if(JSON.parse(localStorage.getItem("userInfo")).roleId == 2){
-            console.log(JSON.parse(localStorage.getItem("userInfo")).roleId);
             this.isTeacher = true;
         }
     },
