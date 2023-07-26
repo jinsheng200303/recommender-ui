@@ -22,6 +22,7 @@
 import { getPaperQuestion } from '@/api/paperApis.js'
 import { findQuestionOptions } from '@/api/questionApis.js'
 import { examSubmit } from '@/api/examApis'
+import {getStudentPaper} from "@/api/studentPaperPageApis";
 import startExamQuestion from './startExamQuestion.vue'
 export default {
     components: {
@@ -33,32 +34,61 @@ export default {
             selectedAnswer: [],
             correctAnswer: [],
             isSubmit: false,
+            pageInfo: {
+              examId: this.$route.query.examId,
+              userId: JSON.parse(localStorage.getItem("userInfo")).userId,
+              pageNum: 1,
+              pageSize: 1,
+            },
+            hasDone: false,
         }
     },
     created() {
-        getPaperQuestion(this.$route.query.paperId)
-        .then((res) => {
-            res.data.forEach((item) => {
-                this.questionData.push(item);
-                this.correctAnswer.push(item.answer);
-                item.studentAnswer = '';
-            })
-        }).then(() => {
-            this.questionData.forEach((item) => {
-                findQuestionOptions(item.questionId)
-                .then((res) => {
-                    item.options = res.data;
+        this.checkData();
+        if(!this.hasDone){
+          getPaperQuestion(this.$route.query.paperId)
+              .then((res) => {
+                res.data.forEach((item) => {
+                  this.questionData.push(item);
+                  this.correctAnswer.push(item.answer);
+                  item.studentAnswer = '';
                 })
+              }).then(() => {
+            this.questionData.forEach((item) => {
+              findQuestionOptions(item.questionId)
+                  .then((res) => {
+                    item.options = res.data;
+                  })
             })
-        })
-        if(JSON.parse(localStorage.getItem("userInfo")).roleId == 2){
+          })
+          if(JSON.parse(localStorage.getItem("userInfo")).roleId == 2){
             this.isSubmit = true;
+          }
         }
     },
     mounted() {
 
     },
     methods: {
+      checkData(){
+        getStudentPaper(this.pageInfo).then((res) => {
+          if(res.code === 200){
+            if(res.data.records.length !== 0){
+              this.hasDone = true;
+              this.isSubmit = true;
+              this.questionData = JSON.parse(res.data.records[0].paper)
+              this.$nextTick(() => {
+                this.questionData.forEach((item,index) => {
+                  this.$refs.examQuestion[index].checkRefresh();
+                  this.$refs.examQuestion[index].submitRefresh();
+                })
+              })
+            }
+          }else {
+            this.$message.error(res.error)
+          }
+        })
+      },
         selectedRefresh(radioValue,index){
             this.selectedAnswer[index] = radioValue;
             this.questionData[index].studentAnswer = radioValue;
