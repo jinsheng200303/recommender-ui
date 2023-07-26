@@ -120,6 +120,11 @@ const router = new VueRouter({
           component: () => import('@/views/user/classStatics.vue'),
         },
         {
+          path: '/classinfo/classStudentStatics',
+          name: 'classStudentStatics',
+          component: () => import('@/views/user/classStudentStatics.vue'),
+        },
+        {
           path: '/classinfo/classGraph',
           name: 'classGraph',
           component: () => import('@/views/user/classGraph.vue'),

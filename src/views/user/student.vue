@@ -14,7 +14,7 @@
                 </template>
                 <template slot-scope="scope" v-if="isTeacher">
                     <!-- <el-button size="mini" type="primary" @click.stop="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
-                    <el-button size="mini" type="danger" @click.stop="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="mini" type="danger" @click.stop="handleDelete(scope.$index, scope.row)">删 除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -147,7 +147,14 @@ export default {
             this.temStudent.userName = row.userName;
         },
         selectStudent(row,column,event){
-            this.$message.success("成功选择此学生--"+row.userName);
+          if(JSON.parse(localStorage.getItem("userInfo")).roleId === 2){
+            this.$router.push({
+              name: 'classStudentStatics',
+              query: {
+                studentId: row.userId,
+              }
+            })
+          }
         }
     },
     created() {

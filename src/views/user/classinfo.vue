@@ -39,7 +39,7 @@
                             <i class="el-icon-s-order"></i>
                             <span slot="title">试 卷</span>
                         </el-menu-item>
-                        <el-menu-item index="/classinfo/classStatics">
+                        <el-menu-item index="/classinfo/classStatics" v-if="!isTeacher">
                             <i class="el-icon-s-data"></i>
                             <span slot="title">统 计</span>
                         </el-menu-item>

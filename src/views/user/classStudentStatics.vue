@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div class="header" @click="goBackRouter"><-学 生</div>
     <div class="staticsChart" id="echartsGraph">
     </div>
     <div class="button-area">
@@ -16,7 +17,7 @@ import my from "@/views/user/my.vue";
 export default {
   data(){
     return{
-      myChart: '',
+      studentChart: '',
       option: {},
       name: [],
       value: [],
@@ -47,7 +48,7 @@ export default {
       return str
     },
     drawKnowledgeComprehension(){
-      this.myChart = this.$echarts.init(document.getElementById("echartsGraph"))
+      this.studentChart = this.$echarts.init(document.getElementById("echartsGraph"))
       this.option = {
         label: {
           textBorderWidth: -1,
@@ -94,8 +95,11 @@ export default {
           }
         ]
       }
-      this.myChart.setOption(this.option);
+      this.studentChart.setOption(this.option);
     },
+    goBackRouter(){
+      this.$router.go(-1)
+    }
   },
   created() {
 
@@ -127,12 +131,20 @@ export default {
   width: 100%;
   height: 100vh;
 }
+.header{
+  width: 80%;
+  height: 5vh;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 20px;
+  cursor: pointer;
+}
+.header:hover{
+  color: #13a8e8;
+}
 .staticsChart{
-  height: 80vh;
+  height: 75vh;
   width: 100%;
-  /*display: flex;*/
-//justify-content: center;
-//align-items: center;
 }
 .button-area{
   width: 100%;
