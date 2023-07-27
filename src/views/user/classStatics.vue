@@ -3,8 +3,8 @@
     <div class="staticsChart" id="echartsGraph">
     </div>
     <div class="button-area">
-      <el-button type="primary" @click="sub">上一页</el-button>
-      <el-button type="primary" @click="add">下一页</el-button>
+      <el-button type="primary" @click="sub" :disabled="!(currentPage>1)">上一页</el-button>
+      <el-button type="primary" @click="add" :disabled="!(currentPage<maxPage)">下一页</el-button>
     </div>
   </div>
 
@@ -20,20 +20,29 @@ export default {
       option: {},
       name: [],
       value: [],
+      count: 8,
       start: 0,
-      end: 5,
+      end: 0,
+      maxPage: 0,
+      currentPage: 1,
     }
   },
   methods: {
     add(){
-      this.start+=5;
-      this.end+=5;
-      this.drawKnowledgeComprehension()
+      if(this.currentPage < this.maxPage){
+        this.start+=this.count;
+        this.end+=this.count;
+        this.currentPage++;
+        this.drawKnowledgeComprehension()
+      }
     },
     sub(){
-      this.start-=5;
-      this.end-=5;
-      this.drawKnowledgeComprehension()
+      if(this.currentPage > 1) {
+        this.start -= this.count;
+        this.end -= this.count;
+        this.currentPage--;
+        this.drawKnowledgeComprehension()
+      }
     },
     formatterHover(params){
       let str=' ';
@@ -47,7 +56,6 @@ export default {
       return str
     },
     drawKnowledgeComprehension(){
-      this.myChart = this.$echarts.init(document.getElementById("echartsGraph"))
       this.option = {
         label: {
           textBorderWidth: -1,
@@ -77,6 +85,9 @@ export default {
             data: this.name.slice(this.start,this.end),
             axisTick: {
               alignWithLabel: true
+            },
+            axisLabel: {
+              interval:0,//代表显示所有x轴标签显示
             }
           }
         ],
@@ -98,7 +109,7 @@ export default {
     },
   },
   created() {
-
+    this.end = this.count;
   },
   mounted() {
     let userId;
@@ -109,6 +120,7 @@ export default {
     }
     getDinaById(userId).then((res) => {
       if (res.code === 200){
+        this.maxPage = res.data.length/this.count;
         res.data.forEach((item) => {
           this.name.push(item.knowledgeName)
           this.value.push(item.comprehension)
@@ -116,6 +128,7 @@ export default {
       }else {
         this.$message.error(res.msg);
       }
+      this.myChart = this.$echarts.init(document.getElementById("echartsGraph"))
       this.drawKnowledgeComprehension();
     })
   }
@@ -130,9 +143,6 @@ export default {
 .staticsChart{
   height: 80vh;
   width: 100%;
-  /*display: flex;*/
-//justify-content: center;
-//align-items: center;
 }
 .button-area{
   width: 100%;
