@@ -88,7 +88,7 @@
 
 
         imgList: [
-					    {imgUrl: "https://pic.2amok.com/20210527/e7883f3d86ce53b9c043d1f984895c80output_00004.jpg"},
+					    {imgUrl: "https://img.mp.itc.cn/q_mini,c_zoom,w_640/upload/20170511/2e5403d28fc8462c91421a5ebd6d873f_th.jpg"},
 					    {imgUrl: "https://img.tukuppt.com/ad_preview/00/05/43/5c98d7efa7804.jpg!/fw/980"},
 					    {imgUrl: "https://pic1.zhimg.com/v2-463f671095a7591e30b727d295fe701b_1440w.jpg?source=172ae18b"},
 					    {imgUrl: "https://pic4.zhimg.com/v2-39587221096a0d44e876c70459957db2_r.jpg"},
