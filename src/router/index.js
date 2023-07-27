@@ -44,6 +44,11 @@ const router = new VueRouter({
           component: () => import('@/views/backgroundManager/Question.vue')
         },
         {
+          path: 'Resource',
+          name: '学习资源',
+          component: () => import('@/views/backgroundManager/Resource.vue')
+        },
+        {
           path: 'PersonInfo',
           name: '个人信息',
           component: () => import('@/views/backgroundManager/PersonInfo.vue')
