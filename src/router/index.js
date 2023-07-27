@@ -54,6 +54,11 @@ const router = new VueRouter({
           component: () => import('@/views/backgroundManager/knowledge.vue')
         },
         {
+          path: 'lesson',
+          name: '公共课程管理',
+          component: () => import('@/views/backgroundManager/Lesson.vue')
+        },
+        {
           path: 'PersonInfo',
           name: '个人信息',
           component: () => import('@/views/backgroundManager/PersonInfo.vue')

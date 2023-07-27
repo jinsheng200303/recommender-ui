@@ -8,3 +8,21 @@ export function getLessonPage(lessonQuery) {
         data: lessonQuery,
     })
 }
+
+//课程新增/修改
+export function updateLesson(lesson) {
+    return request({
+        url: '/lesson/save',
+        method: 'post',
+        data: lesson,
+    })
+}
+
+//删除课程
+export function deleteLessonById(IDS) {
+    return request({
+        url: '/lesson/delBatch',
+        method: 'post',
+        data: IDS,
+    })
+}
