@@ -49,7 +49,7 @@
               </div>
             </li>
             <div class="lesson-title">公 共 课 程 资 源</div>
-            <li v-for="item in lessonData" class="infinite-list-item">
+            <li v-for="item in lessonData" class="infinite-list-item" :key="item.lessonId">
               <recommend-video-card :recommendData="item"></recommend-video-card>
             </li>
             <p class="infinite-footer">{{ footerTip }}</p>
@@ -233,8 +233,8 @@
     height: calc(100vh - 120px);
   }
   .recommend-container{
-    //width: 100%;
-    //height: 100%;
+    /* //width: 100%;
+    //height: 100%; */
   }
   .recommend-container-title{
     text-align: center;
@@ -243,14 +243,14 @@
   }
   .recommend-area{
     width: 100%;
-    //height: 265px;
+    /* //height: 265px; */
     margin-bottom: 40px;
     float: left;
-    //display: flex;
+    /* //display: flex;
     //flex-direction: column;
     //flex-wrap: wrap;
     //justify-content: center;
-    //align-items: center;
+    //align-items: center; */
   }
   .recommend-card-wrapper{
     float: left;
