@@ -56,6 +56,12 @@
         <span slot="title">学习资源</span>
       </template>
     </el-menu-item>
+    <el-menu-item index="/ManagePage/knowledge">
+      <template slot="title">
+        <i class="el-icon-tickets"></i>
+        <span slot="title">知识点管理</span>
+      </template>
+    </el-menu-item>
     <el-menu-item index="/ManagePage/PersonInfo">
       <template slot="title">
         <i class="el-icon-star-off"></i>
