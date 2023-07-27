@@ -191,34 +191,15 @@ import {deleteQuestionInfo} from "@/api/questionApis.js";
 import {findQuestionOptions} from "@/api/questionApis.js";
 import {reviseOptionInfo} from "@/api/optionApis.js";
 import {deleteOptionInfo} from "@/api/optionApis.js";
+import {getKnowledgeList} from "@/api/knowledgeApis";
+import {getQuestionBank} from "@/api/testApis";
 
 export default { 
     name: "Question",
   data() {
     return {
-        options: [{
-          value: '1',
-          label: '数据库'
-        }, {
-          value: '2',
-          label: '数据结构'
-        }, {
-          value: '3',
-          label: '数学建模'
-        }, {
-          value: '4',
-          label: '计算机网络'
-        }, {
-          value: '5',
-          label: '操作系统'
-        }],
-        options2: [{
-          value: '1',
-          label: '数据库基本数据类型'
-        }, {
-          value: '2',
-          label: '数据库基本概念'
-        }],
+        options: [],
+        options2: [],
         value: '',
       tableData: [],
       optionsTableData: [],
@@ -280,17 +261,39 @@ export default {
   },
   created() {
     // 请求分页查询数据
-    this.load()
+    this.load();
+    this.getOption2();
+    this.getOptions();
   },
   methods: {
-    search(){
-      this.pageshow = false;
-      this.questionInfo.pageNum=1;
-      this.load()
-      this.$nextTick(() => {
-        this.pageshow = true;
-      });
+    getOptions(){
+      getQuestionBank().then((res) => {
+        res.forEach((item) => {
+          this.options.push({
+            value: item.bankId,
+            label: item.bankName,
+          })
+        })
+      })
     },
+      getOption2(){
+        getKnowledgeList().then((res) => {
+          res.forEach((item) => {
+            this.options2.push({
+              value: item.knowledgeId,
+              label: item.knowledgeName,
+            })
+          })
+        })
+      },
+      search(){
+        this.pageshow = false;
+        this.questionInfo.pageNum=1;
+        this.load()
+        this.$nextTick(() => {
+          this.pageshow = true;
+        });
+      },
       submitForm(form) {
         this.$refs.form.validate((valid) => {
           if (valid) {
