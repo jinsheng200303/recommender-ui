@@ -19,13 +19,13 @@ export default {
   },
   methods: {
     selectedCard(){
-      recordBrowse(this.textCardData.resourceId,JSON.parse(localStorage.getItem("userInfo")).userId).then((res) => {
-        if (res.code === 200){
+      // recordBrowse(this.textCardData.resourceId,JSON.parse(localStorage.getItem("userInfo")).userId).then((res) => {
+      //   if (res.code === 200){
 
-        }else {
-          this.$message.error(res.msg);
-        }
-      })
+      //   }else {
+      //     this.$message.error(res.msg);
+      //   }
+      // })
       window.open(this.textCardData.lessonLink, '_blank');
     }
   },
