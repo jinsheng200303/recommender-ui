@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-            <el-input style="width: 200px" @input="search" placeholder="请输入名称" suffix-icon="el-icon-user" v-model="pageInfo.username"></el-input>
+            <el-input style="width: 200px" @input="search" placeholder="请输入用户名" suffix-icon="el-icon-user" v-model="pageInfo.username"></el-input>
             <el-input style="width: 200px" @input="search" placeholder="请输入邮箱" suffix-icon="el-icon-message" class="ml" v-model="pageInfo.email"></el-input>
             <el-button class="ml" type="primary" @click="search">搜索 <i class="el-icon-search"></i></el-button>
           </div>

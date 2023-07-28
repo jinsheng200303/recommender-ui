@@ -64,8 +64,8 @@
             <el-form-item label="课堂名" prop="className">
               <el-input v-model="form.className" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="课堂类别" prop="classCategoryId">
-              <el-select v-model="form.classCategoryId" filterable placeholder="请选择课堂类别">
+            <el-form-item label="课堂类别" prop="categoryId">
+              <el-select v-model="form.categoryId" filterable placeholder="请选择课堂类别">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -99,30 +99,13 @@
 import {getTeacherClassInfo} from "@/api/classApis.js";
 import {newClass} from "@/api/classApis.js";
 import {deleteClass} from "@/api/classApis.js";
+import {getQuestionBank} from "@/api/testApis";
 
 export default { 
     name: "User",
   data() {
     return {
-      options: [{
-          value: '1',
-          label: 'java'
-        }, {
-          value: '2',
-          label: 'python'
-        }, {
-          value: '3',
-          label: '数据库'
-        }, {
-          value: '4',
-          label: '数据结构'
-        }, {
-          value: '5',
-          label: '智能终端'
-        }, {
-          value: '6',
-          label: 'C++'
-        }],
+      options: [],
         value: '',
       tableData: [],
       total: 0,
@@ -138,13 +121,13 @@ export default {
       form: {
         classId: '',
         className: '',
-        classCategoryId: '',
+        categoryId: '',
         createUserId: '',
         classPicture: '',
       },
       rules: {
         className: [{required: true, message: '请输入课堂名', trigger: 'blur'}],
-        classCategoryId: [{required: true, message: '请选择课堂类别', trigger: 'change'}],
+        categoryId: [{required: true, message: '请选择课堂类别', trigger: 'change'}],
         createUserId: [{required: true, message: '请输入教师ID', trigger: 'blur' },],
       },
       pageInfo:{
@@ -161,6 +144,7 @@ export default {
   created() {
     // 请求分页查询数据
     this.load()
+    this.getOptions();
   },
   methods: {
     search(){
@@ -170,6 +154,16 @@ export default {
       this.$nextTick(() => {
         this.pageshow = true;
       });
+    },
+    getOptions(){
+      getQuestionBank().then((res) => {
+        res.forEach((item) => {
+          this.options.push({
+            value: item.bankId,
+            label: item.bankName,
+          })
+        })
+      })
     },
     submitForm(form) {
         this.$refs.form.validate((valid) => {

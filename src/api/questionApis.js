@@ -12,7 +12,7 @@ export function getQuestionInfo(questionsInfo) {
 // 新增/修改试题信息
 export function reviseQuestionInfo(questionsInfo) {
     return request({
-        url: '/questions/save',
+        url: '/questions/addQuestionKnowledge',
         method: 'post',
         data: questionsInfo
     })

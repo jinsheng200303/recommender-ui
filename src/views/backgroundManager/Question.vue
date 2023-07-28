@@ -214,8 +214,13 @@ export default {
       form: {
         questionId: '',
         questionStatement: '',
-        questionType: "1",
+        questionTypeId: "1",
+        status: 1,
         flag: '',
+      },
+      questionKnowledgeForm: {
+        knowledgeId: '',
+        questionId: '',
       },
       formOption: {
         optionId: '',
@@ -226,7 +231,7 @@ export default {
       rules: {
         questionStatement: [{required: true, message: '请输入试题描述', trigger: 'blur'}],
         answer: [{required: true, message: '请输入试题答案', trigger: 'blur'}],
-        questionType: [{required: true, message: '请选择试题类别', trigger: 'blur'}],
+        questionTypeId: [{required: true, message: '请选择试题类别', trigger: 'blur'}],
         bankId: [{required: true, message: '请选择题库', trigger: 'blur'}],
         knowledgeId: [{required: true, message: '请选择知识点', trigger: 'blur'}],
         score: [{required: true, message: '请输入分数', trigger: 'blur'}],
@@ -333,6 +338,8 @@ export default {
         this.load()
       },
     save() {
+      this.form.questionTypeId = 1;
+      this.form.status = 1;
       reviseQuestionInfo(this.form).then((res) => {
           console.log(res)
           if (res.msg=='操作成功') {

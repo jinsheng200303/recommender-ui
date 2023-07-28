@@ -119,29 +119,6 @@ export default {
       },
       series: [
         {
-          // name: 'Access From',
-          // type: 'pie',
-          // radius: ['40%', '70%'],
-          // avoidLabelOverlap: false,
-          // itemStyle: {
-          //   borderRadius: 10,
-          //   borderColor: '#fff',
-          //   borderWidth: 2
-          // },
-          // label: {
-          //   show: false,
-          //   position: 'center'
-          // },
-          // emphasis: {
-          //   label: {
-          //     show: true,
-          //     fontSize: 40,
-          //     fontWeight: 'bold'
-          //   }
-          // },
-          // labelLine: {
-          //   show: false
-          // },
           name: '用户年龄分布概况',
           type: 'pie',
           radius: [20, 140],
@@ -203,15 +180,29 @@ export default {
       ],
       series: [
         {
-          name: 'Direct',
+          name: 'column',
           type: 'bar',
           barWidth: '60%',
           data: []
+        },
+        {
+          name: '人数',
+          type: 'line',
+          smooth: true,
+          // yAxisIndex: 1,
+          // tooltip: {
+          //   valueFormatter: function (value) {
+          //     return value + ' °C';
+          //   }
+          // },
+          data: []
         }
+        
       ]
     };
     getEchartsUsersPolitics().then((res) => {
       colOption.series[0].data=res.data
+      colOption.series[1].data=res.data
       colOption && myChart2.setOption(colOption);
     })
   },
